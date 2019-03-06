@@ -20,7 +20,6 @@
 	\hrule 
 	\vskip 0.5cm
 	\section*{\normalfont Introduction}
-
 	% Motivation and a brief project description.
 	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to provide insights regarding structure that apply to RTI generally, including in the later stages of RTI development, using TDA methods.
   
@@ -31,7 +30,8 @@
 	
 	\section*{\normalfont Data} 
 %	What are the type(s) of data your project will be dealing with?  How do you plan to get hold of such data sets?  What kind of insights are you planning to obtain from your data?
-	We will collect our data via simulation. 
+
+	Our dataset has to be simulated using the physics of bubble formation as briefly described in the introduction. In particular, we will use a set of points in $\mathbb{R}^3$ that also have viscosities and velocities. In the paper, the authors had access to a supercomputer, a resource that we do not have, so we must generate a significantly smaller simulation. Instead of the $1152^3$ or $3072^3$ data points, we will use $256^3$ points. The reason for simulation stems from the obvious difficulty in precisely measuring bubble formation and maturation.
 	
 	\section*{\normalfont Background} 
 %	What are the state-of-the-art techniques in dealing with the data of your interest?
@@ -40,12 +40,15 @@
 %	What are the expected technical contributions of your proposed work?
 %	What are the differences and similarities between your proposed work and the state-of-the-art?
 	
+	
 	\section*{\normalfont Expected Outcomes and Deliverables}  
 %	What are the expected outcomes of your proposed project?
 %	What do you plan to hand in?  (e.g.  source code, video demo, etc.)
 	
 	\section*{\normalfont Evaluation}  
 %	What are the metrics to be used to evaluate how successful your project is once it is completed by the end of the semester?
+	
+	
 	
 	\section*{\normalfont Proposed Methods}  
 %	What methods are you planning to use/develop?  What are your strategies in
@@ -54,10 +57,12 @@
 	\section*{\normalfont Software}  
 %	What are the software (and possibly hardware) do you plan to use?  Or in the case you are working on software extensions, what is the baseline software you plan to work with?
 	
+	For dataset generation for each time-step, we will possibly use C/C++ to speed up the process. From there, we will use Java or Python to generate a filtration of the Morse-Smale complex at each time-step (as well as other filtrations we may wish to try). Subsequently we will use Ripser to generate a persistence diagram. To generate critical points we are, as of now, unsure what software we will use or if we will write our own.
+	
 	\section*{\normalfont Timelines}  
 %	Between March 7th and April 23, what are the various milestones you plan to achieve along the way?
 
-	Since we are attempting to reproduce the results of the paper, as well as do our own parametric analysis, we will closely follow their TDA pipeline. Our rough project timeline is as follows:
+	Since we are attempting to reproduce the results of the paper, as well as do our own parametric analysis and perhaps try other filtrations, we will closely follow their TDA pipeline. Our rough project timeline is as follows:
 	\begin{enumerate}
 		\item[{\textit{Week 1:}}] 
 		Analyze the paper carefully and create software to generate a data-set for each time-step.
