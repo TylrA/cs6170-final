@@ -11,6 +11,7 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{bm}
+\usepackage{cite}
 
 \title{Project Proposal}
 \author{Tyler Adams: u0761872 \\Corbin Baldwin: u0292800}
@@ -31,7 +32,7 @@
 	\section*{\normalfont Data} 
 %	What are the type(s) of data your project will be dealing with?  How do you plan to get hold of such data sets?  What kind of insights are you planning to obtain from your data?
 
-	Our dataset has to be simulated using the physics of bubble formation as briefly described in the introduction. In particular, we will use a set of points in $\mathbb{R}^3$ that also have viscosities and velocities. In the paper, the authors had access to a supercomputer, a resource that we do not have, so we must generate a significantly smaller simulation. Instead of the $1152^3$ or $3072^3$ data points, we will use $256^3$ points. The reason for simulation stems from the obvious difficulty in precisely measuring bubble formation and maturation.
+	Our dataset has to be simulated using the physics of bubble formation as briefly described in the introduction. In particular, we will use a set of points in $\mathbb{R}^3$ that also have viscosities and velocities. In \cite{paper}, hereafter referred to as the paper, the authors had access to a supercomputer, a resource that we do not have, so we must generate a significantly smaller simulation. Instead of the $1152^3$ or $3072^3$ data points, we will use $256^3$ points. The reason for simulation stems from the obvious difficulty in precisely measuring bubble formation and maturation.
 	
 	\section*{\normalfont Background} 
 %	What are the state-of-the-art techniques in dealing with the data of your interest?
@@ -39,6 +40,8 @@
 	\section*{\normalfont Technical Contributions} 
 %	What are the expected technical contributions of your proposed work?
 %	What are the differences and similarities between your proposed work and the state-of-the-art?
+
+
 	
 	
 	\section*{\normalfont Expected Outcomes and Deliverables}  
@@ -49,17 +52,19 @@ We expect to be able to reproduce the results of the paper, albeit with a signif
 	\section*{\normalfont Evaluation}  
 %	What are the metrics to be used to evaluate how successful your project is once it is completed by the end of the semester?
 	
-	
+	Due to the qualitative nature of the project, the first objective is to successfully recreate the results of the paper on a smaller scale. After this, we will use our software to study other meaningful properties of RTI such as ???? 
 	
 	\section*{\normalfont Proposed Methods}  
 %	What methods are you planning to use/develop?  What are your strategies in
 %	tackling the proposed problem?
 
+	Given a time-step of fluid data, we will first extract the boundary of the two isosurfaces. From the boundary we will construct a Morse-Smale complex and possibly denoise it. With this simplicial complex we can then extract critical points using a Morse function and store this information. Collecting all the various time-steps, we can track the birth and death of bubbles in this filtration of Morse-Smale complexes thus generating an evolution of the life of the bubbles.
+
 
 	\section*{\normalfont Software}  
 %	What are the software (and possibly hardware) do you plan to use?  Or in the case you are working on software extensions, what is the baseline software you plan to work with?
 	
-	For dataset generation for each time-step, we will possibly use C/C++ to speed up the process. From there, we will use Java or Python to generate a filtration of the Morse-Smale complex at each time-step (as well as other filtrations we may wish to try). Subsequently we will use Ripser to generate a persistence diagram. To generate critical points we are, as of now, unsure what software we will use or if we will write our own.
+	For dataset generation for each time-step, we will possibly use C/C++ to speed up the process. From there, we will use Java or Python to generate a filtration of the Morse-Smale complex at each time-step (as well as other filtrations we may wish to try). To generate critical points we are, as of now, unsure what software we will use or if we will write our own. The paper describes some software they have used for calculating and simplifying Morse-Smale complexes so we will possibly explore this option.
 	
 	\section*{\normalfont Timelines}  
 %	Between March 7th and April 23, what are the various milestones you plan to achieve along the way?
@@ -73,7 +78,7 @@ We expect to be able to reproduce the results of the paper, albeit with a signif
 		\item[{\textit{Week 3:}}] 
 		Extract and store a combinatorial Morse-Smale complex for each time-step.
 		\item[{\textit{Week 4:}}] 
-		Learn how to extract relevant homological information from the filtration necessary for the final step.
+		Learn how to extract relevant critical point information from the filtration necessary for the final step.
 		\item[{\textit{Week 5:}}]  
 		Construct merge-trees to display results.
 		\item[{\textit{Week 6:}}] 
@@ -95,8 +100,9 @@ We expect to be able to reproduce the results of the paper, albeit with a signif
 %		
 %		\item How can we evaluate how successful your project is once it is completed?
 %	\end{enumerate}
-	To summarize, our project aims to reproduce results of the paper and slightly expand the existing understanding of RTI through simulation and TDA. 
-	
-	We would like to see how dependent the conclusions of the data are for Morse-Smale complexes versus other simplicial complexes and different choices of Morse function. To do this we will simulate our own time-step data using the physics of bubble formation. 
+	To summarize, RTI is an important area of fluid dynamics and has many applications from the study of supernovae to fusion reactions. Our project aims to reproduce results of the paper and expand the existing understanding of RTI through simulation and TDA. We would like to see to what extent the paper's conclusions are dependent upon Morse-Smale complexes versus other simplicial complexes or different choices of Morse function. Time permitting, we may also analyze bubble formation given different intitial states or perturbations. To do this we will simulate our own time-step data using the physics of bubble formation. If successful, our project will roughly duplicate the experiments in the paper and be able to describe other meaningful properties of RTI.
+
+\bibliography{mybib}{}
+\bibliographystyle{plain}
 
 \end{document}
