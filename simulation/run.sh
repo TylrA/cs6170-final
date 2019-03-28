@@ -23,6 +23,5 @@ fi
 if ! python3 plot.py
 then
     printf "An error occurred somewhere in the program\n"
-    cd ../
     exit 1
 fi
