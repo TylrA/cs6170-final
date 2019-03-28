@@ -34,7 +34,7 @@ ax = fig.add_subplot(111,aspect='equal')
 cbar = None
 def update(i):
     global cbar
-    j = int(i)*1
+    j = int(i)*10
     f = h5py.File("./fields/fields_%d.h5" % j, 'r')
     group = f['fields']
 
@@ -58,5 +58,5 @@ def update(i):
     
     return ax
 
-ani = animation.FuncAnimation(fig, update, frames=range(0,20), interval=1, repeat=False)
+ani = animation.FuncAnimation(fig, update, frames=range(0,100), interval=100, repeat=False)
 ani.save('compressible-rayleigh-taylor-instability.mp4', writer=writer)
