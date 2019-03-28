@@ -13,6 +13,7 @@ import matplotlib.animation as animation
 import matplotlib
 plt.style.use('dark_background')
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+import os
 # Writer = animation.writers['avconv']
 #writer = Writer(fps=8, metadata=dict(title="Compressible Rayleigh-Taylor instability", artist="Christian T. Jacobs"), bitrate=1800)
 # writer = animation.Writer(
@@ -31,11 +32,24 @@ Ly = 3.0
 fig = plt.figure(figsize=(5,5))
 ax = fig.add_subplot(111,aspect='equal')
 
+cwd = os.getcwd()
+parent = os.path.join(cwd, os.path.join(os.path.dirname(__file__)))
+field_dirs = os.listdir(parent + "/fields/")
+field_dirs.sort()
+dir_nums = []
+
+for field_dir in field_dirs:
+    dir_nums.append(int((field_dir.split("_")[1]).split(".")[0]))
+dir_nums.sort()
+
+
 cbar = None
-def update(i):
+def update(dir_num):
+    i = dir_num
+
     global cbar
     j = int(i)*10
-    f = h5py.File("./fields/fields_%d.h5" % j, 'r')
+    f = h5py.File("./fields/fields_%d.h5" % dir_num, 'r')
     group = f['fields']
 
     x = linspace(0, Lx, Nxh)
@@ -58,5 +72,5 @@ def update(i):
     
     return ax
 
-ani = animation.FuncAnimation(fig, update, frames=range(0,100), interval=100, repeat=False)
-ani.save('compressible-rayleigh-taylor-instability.mp4', writer=writer)
+ani = animation.FuncAnimation(fig, update, frames=dir_nums, interval=100, repeat=False)
+ani.save('simulation.mp4', writer=writer)

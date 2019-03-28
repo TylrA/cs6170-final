@@ -50,6 +50,7 @@ void initial_conditions(grid g, double *u, double *v, double *r, double *e, doub
             if((j*g.dy - g.dy - g.Ly/2.0) >= -0.05 && (j*g.dy - g.dy - g.Ly/2.0 <= 0.05))
             {
                 v[offset] = 1e-3*2.0*( (double)rand() / (double)RAND_MAX - 0.5);
+                //v[offset] = 1e-1*2.0*( (double)rand() / (double)RAND_MAX - 0.5);
             }
             else
             {
@@ -79,8 +80,9 @@ void combined_fields(grid g, double *u, double *v, double *r, double *e, double 
 
     // Compute combined fields.
     int i, j;
-    for (i = 0; i < g.Nxh; i++){
-	for (j = 0; j < g.Nyh; j++){
+
+    for (j = 0; j < g.Nyh; j++){
+	for (i = 0; i < g.Nxh; i++){
 	    int offset = j * g.Nxh + i;
 	    p[offset] = (ratio_of_specific_heats-1.0)*(e[offset] - 0.5*r[offset]*(pow(u[offset],2) + pow(v[offset],2)));  // Equation of state.
 	    ruu[offset] = ru[offset]*u[offset];
@@ -106,8 +108,8 @@ void extract_fields(grid g, double *u, double *v, double *r, double *ru, double 
 
     // Extract primitive variables.
     int i, j;
-    for (i = 0; i < g.Nxh; i++){
-	for (j = 0; j < g.Nyh; j++){
+    for (j = 0; j < g.Nyh; j++){
+	for (i = 0; i < g.Nxh; i++){
 	    int offset = j * g.Nxh + i;
 	    u[offset] = ru[offset]/r[offset];
 	    v[offset] = rv[offset]/r[offset];
@@ -130,8 +132,8 @@ void rhs(grid g, double *u, double *v, double *r, double *e, double *p, double *
     
     // Continuity equation's RHS.
     int i, j;
-    for (i = 0; i < g.Nxh - 1; i++){
-	for (j = 0; j < g.Nyh - 1; j++){
+    for (j = 0; j < g.Nyh - 1; j++){
+	for (i = 0; i < g.Nxh - 1; i++){
 	    int offset = j * g.Nxh + i;
 
 	    double drudx = dfdx(&g, ru, i, j);
@@ -170,8 +172,8 @@ void advance(grid g, double *r, double *ru, double *rv, double *e, double *r_old
     //   return;
 
     int i, j;
-    for (i = 0; i < g.Nxh - 1; i++){
-	for (j = 0; j < g.Nyh - 1; j++){
+    for (j = 0; j < g.Nyh - 1; j++){
+	for (i = 0; i < g.Nxh - 1; i++){
 	    int offset = j * g.Nxh + i;
 	    r[offset] = dt*rhs_mass[offset] + r_old[offset];
 	    ru[offset] = dt*rhs_momentum_x[offset] + ru_old[offset];
@@ -419,6 +421,7 @@ int main(int argc, char ** argv)
         // Compute maximum value of dt.
         dt = max_dt(g, r, u, v, p);
         t += dt;
+        // t += dt * 10000.0;
 
         // Diffusivity constants for the Lax-Friedrichs scheme.
         double D = pow(g.dx,2)/(2.0*dt);
