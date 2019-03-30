@@ -1,14 +1,13 @@
 # cs6170-final
 
 ## Installation
-To install, make sure that `ffmpeg` and `hdf5` is installed. Since neither of these were installed for me, I used 
-``` bash
+There are a few libraries I had to install. Unfortunately I do not remember which ones but it was not difficult to do when you look at the compilation errors and do a little googling. I do remember the strangest library we need is eigen3 (I only had to download 3 libraries). To install eigen3, simply use  
+``` 
 sudo apt update
-sudo apt install ffmpeg
-sudo apt-get install libhdf5-serial-dev
+sudo apt install libeigen3-dev
 ```` 
-Additionally, for the python portion, I used `pip install h5py` for evenutal reading from file since I did not have that python module. After installing all the above software, `cd` to the directory `simulate` and type `make`. This creates the executable `simulate`. `simulate` takes two arguments. The first is the number of timesteps to use when generating, the second is the time between timesteps until data is written to file in the `./fields` directory. For example, I used `./simulate 1000 10` to generate 100 stages of the simulation. After this, run `python3 plot.py` and this will generate a video simulation. 
+The code is a modified version of the original which can be found here: http://www.palabos.org/download-ql. A direct download would not build the simulation we needed so this git version should be ok (it works for me at least). Also, after installing the necessary libraries, there is a bash script that does some additional cleanup of files between simulations and constructs the images. To use it, just run `bash ./run.sh`. If `.` is the root directory of the project, then `cd ./simulation` to get to the bash script. 
 
-This code is borrowed from https://github.com/ctjacobs/compressible-rayleigh-taylor-instability. I modified it to not require CUDA and to take command line arguments since that seemed more of a headache than we needed. 
+The simulation spits out a bunch of `.gifs` in the directory `./simulation/gifs` which we can use for boundary extraction and can make into a movie if we wish. Lastly, for some reason it generates two types of `.gifs` depending on light and heavy fluids. I have not tried removing one of which because I am lazy and didn't want to break anything. 
 
-Alternatively, after installing the necessary software, there is a bash script that does some additional cleanup of files between simulations and concstructs the movie in one go. To use it, just run `bash ./run.sh` in the home directory of the cloned repo.
+When you run the the script, after compilation you will be prompted asking how many iterations you would like to run. In order to see the simulation develop, choose around 10000. The default was 16000 but that seemed like overkill.
