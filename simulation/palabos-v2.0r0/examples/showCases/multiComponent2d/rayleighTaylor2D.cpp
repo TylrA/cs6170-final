@@ -125,8 +125,8 @@ void writeGifs(MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
                MultiBlockLattice2D<T, DESCRIPTOR>& lightFluid, plint iT)
 {
     ImageWriter<T> imageWriter("leeloo.map");
-    imageWriter.writeScaledGif(createFileName("../../../../../gifs/rho_heavy_", iT, 6),
-                               *computeDensity(heavyFluid));
+//    imageWriter.writeScaledGif(createFileName("../../../../../gifs/rho_heavy_", iT, 6),
+//                               *computeDensity(heavyFluid));
     imageWriter.writeScaledGif(createFileName("../../../../../gifs/rho_light_", iT, 6),
                                *computeDensity(lightFluid));
 }
@@ -147,7 +147,9 @@ int main(int argc, char *argv[])
     const plint nx   = 1200;
     const plint ny   = 400;
     const T G      = 1.2;
-    T force        = 0.15/(T)ny;
+    // T force        = 0.15/(T)ny;
+    //  T force        = 0.5/(T)ny;
+    T force        = 0.5/(T)ny;
     // const plint maxIter  = 16000;
     const plint saveIter = 100;
     const plint statIter = 10;
@@ -164,8 +166,8 @@ int main(int argc, char *argv[])
     lightFluid.periodicity().toggle(0,true);
 
     T rho1 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
-    T rho0 = 0.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
-    
+    //  T rho0 = 0.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
+    T rho0 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
     // Store a pointer to all lattices (two in the present application) in a vector to
     //   create the Shan/Chen coupling therm. The heavy fluid being at the first place
     //   in the vector, the coupling term is going to be executed at the end of the call
