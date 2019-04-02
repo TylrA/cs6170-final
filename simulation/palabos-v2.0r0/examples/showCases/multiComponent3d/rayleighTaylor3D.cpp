@@ -139,7 +139,7 @@ void writePpms(MultiBlockLattice3D<T, DESCRIPTOR>& heavyFluid,
 void writeVTK(MultiBlockLattice3D<T, DESCRIPTOR>& heavyFluid,
                MultiBlockLattice3D<T, DESCRIPTOR>& lightFluid, plint iT)
 {
-        VtkImageOutput3D<T> vtkOut(createFileName("../../../../../rtis/rho_heavy_", iT, 6), 1.);
+        VtkImageOutput3D<T> vtkOut(createFileName("../../../../../vtis/rho_heavy_", iT, 6), 1.);
         vtkOut.writeData<float>(*computeDensity(heavyFluid), "rho_heavy_", 1.);
         // VtkImageOutput3D<T> vtkOut2(createFileName("rho_light_", iT, 6), 1.);
         // vtkOut.writeData<float>(*computeDensity(lightFluid), "rho_light_", 1.);
