@@ -26,27 +26,27 @@
 	% Motivation and a brief project description.
 	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to provide insights regarding structure that apply to RTI generally, including in the later stages of RTI development, using TDA methods.
 	
-	\section*{\normalfont Completed Milestones} We have successfully been able to install and run software that simulates RTI and saves the time-steps in images which we can use further down the pipeline. Additionally, we have written software that extracts the isosurfaces of the images with which we can track bubble evolution. An example time evolution is shown below.
+	\section*{\normalfont Completed Milestones} We have successfully been able to install and run software that simulates RTI and saves the time-steps in 2D images which we can use further down the pipeline. Additionally, we have written software that extracts the isosurfaces of the images with which we can track bubble evolution and we have written software that smooths out noise in the vein of DON'T FORGET TO ANSWER ME. Lastly we have also installed recommended software and were able to get the examples running on Morse-Smale complex computations. For more information on these divergent paths, see the Modifications section. An example time evolution is shown below.
 		\begin{figure*}[ht!]
 		\centering
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig1.png}
+			\includegraphics[scale = .25]{fig1.png}
 			\caption{$t = 2100$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig2.png}
+			\includegraphics[scale = .25]{fig2.png}
 			\caption{$t = 2600$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig3.png}
+			\includegraphics[scale = .25]{fig3.png}
 			\caption{$t = 2900$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig4.png}
+			\includegraphics[scale = .25]{fig4.png}
 			\caption{$t = 3300$}
 		\end{subfigure}
 	\end{figure*}
@@ -54,7 +54,7 @@
 	
 	\section*{\normalfont Upcoming Milestones} The next milestones are:
 	\begin{enumerate}
-		\item Smooth out the isosurfaces so that we can better track bubble evolution.
+%		\item Smooth out the isosurfaces so that we can better track bubble evolution.
 		\item Implement a height function to track critical points and the evolution of bubbles.
 		\item Construct a persistence diagram describing the birth and death of bubbles.
 		\item Possibly classify simulations by density or other parameters by their persistence diagrams. I.e., is this bubble evolution symptomatic of the mixing of air and water?
@@ -63,10 +63,15 @@
 	\section*{\normalfont Preliminary Results}
 	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have done.
 	
-	\section*{\normalfont Modifications}
-%	Originally, we planned to study three dimensional RTIs, but it appears that this may be impractical with the computing power available to us. The two dimensional case may be simplified, but it also allows us to study the fluctuations with more detail, as we can observe the interiors of each bubble. 
+	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's. Originally, we planned to study three dimensional RTIs, but it appears that this may be impractical with the computing power available to us. The two dimensional case may be simplified, but it also allows us to study the fluctuations with more detail, as we can observe the interiors of each bubble. 
 	
-	\section*{\normalfont Summary}
+	\begin{gather*}
+		\frac{\partial \rho Y_i}{\partial t} + \nabla \dot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
+		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
+		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
+	\end{gather*} 
+	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch quickly. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may choose to use the 2-dimensional version. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species using TDA and machine-learning. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
+	 	\section*{\normalfont Summary}
 
 %  
 %	\section*{\normalfont Project Objective}  
