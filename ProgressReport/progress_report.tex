@@ -61,9 +61,9 @@
 	\end{enumerate} 
 
 	\section*{\normalfont Preliminary Results}
-	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have done.
+	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have also done.
 	
-	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's. Originally, we planned to study three dimensional RTIs, but it appears that this may be impractical with the computing power available to us. The two dimensional case may be simplified, but it also allows us to study the fluctuations with more detail, as we can observe the interiors of each bubble. 
+	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
 	
 	\begin{gather*}
 		\frac{\partial \rho Y_i}{\partial t} + \nabla \dot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
@@ -71,8 +71,12 @@
 		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
 	\end{gather*} 
 	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch quickly. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may choose to use the 2-dimensional version. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species using TDA and machine-learning. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
+	
+%Originally, we planned to study three dimensional RTIs, but it appears that this may be impractical with the computing power available to us. The two dimensional case may be simplified, but it also allows us to study the fluctuations with more detail, as we can observe the interiors of each bubble.
 	 	\section*{\normalfont Summary}
-
+	We have arranged a process to acquire the data necessary for our research over two dimensional RTIs, including the simulation and the extraction of isosurfaces from said simulation. We hope to acquire three dimensional RTI data as well. Regarding the data, we still have not utilized topological data analysis to perform the essence of our research. This should include several topological filtrations.
+	
+	With the filtrations we plan to classify simulations by the structure of their RTIs. Factors that will be considered include the birth and death times of bubbles, and the size of bubbles.
 %  
 %	\section*{\normalfont Project Objective}  
 %%	What is the main objective/goal of your project?  What are you planning to
