@@ -66,7 +66,7 @@
 	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's. Originally, we planned to study three dimensional RTIs, but it appears that this may be impractical with the computing power available to us. The two dimensional case may be simplified, but it also allows us to study the fluctuations with more detail, as we can observe the interiors of each bubble. 
 	
 	\begin{gather*}
-		\frac{\partial \rho Y_i}{\partial t} + \nabla \dot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
+		\frac{\partial \rho Y_i}{\partial t} + \nabla \cdot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
 		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
 		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
 	\end{gather*} 
@@ -156,6 +156,11 @@
 %%		\item How can we evaluate how successful your project is once it is completed?
 %%	\end{enumerate}
 %	To summarize, RTI is an important area of fluid dynamics and has many applications from the study of supernovae to fusion reactions. Our project aims to reproduce results of the paper and expand the existing understanding of RTI through simulation and TDA. We would like to see to what extent the paper's conclusions are dependent upon Morse-Smale complexes versus other simplicial complexes or different choices of Morse function. Time permitting, we may also analyze bubble formation given different intitial states or perturbations. To do this we will simulate our own time-step data using the physics of bubble formation. If successful, our project will roughly duplicate the experiments in the paper and be able to describe other meaningful properties of RTI.
+
+
+Let $\mathbb{M}$ be a smooth 2-manifold and let $f: \mathbb{M} \to \mathbb{R}$ be a smooth function. A \emph{critical point} $x_0 \in \mathbb{M}$ is a point such that $\nabla f(x_0) = 0$ and is \emph{non-degenerate} if the hessian $\Delta^2 f(x_0)$ is invertible. Then $f$ is called \emph{morse} if every critical point of $f$ is non-degenerate and for every pair of (non-degenerate) critical points $x_0, x_1$, we have $x_0 \ne x_1 \implies f(x_0) \ne f(x_1)$. 
+
+
 
 
 \end{document}
