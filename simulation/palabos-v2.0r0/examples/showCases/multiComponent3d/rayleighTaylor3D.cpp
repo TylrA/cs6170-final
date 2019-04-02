@@ -136,8 +136,23 @@ void writePpms(MultiBlockLattice3D<T, DESCRIPTOR>& heavyFluid,
                                *computeDensity(lightFluid, slice));
 }
 
+void writeVTK(MultiBlockLattice3D<T, DESCRIPTOR>& heavyFluid,
+               MultiBlockLattice3D<T, DESCRIPTOR>& lightFluid, plint iT)
+{
+        VtkImageOutput3D<T> vtkOut(createFileName("../../../../../rtis/rho_heavy_", iT, 6), 1.);
+        vtkOut.writeData<float>(*computeDensity(heavyFluid), "rho_heavy_", 1.);
+        // VtkImageOutput3D<T> vtkOut2(createFileName("rho_light_", iT, 6), 1.);
+        // vtkOut.writeData<float>(*computeDensity(lightFluid), "rho_light_", 1.);
+}
+
+
 int main(int argc, char *argv[])
 {
+    int num_iter;
+    cout << "Please enter how many iterations to run." << endl;
+    cin >> num_iter;
+    const plint maxIter = num_iter;
+
     plbInit(&argc, &argv);
     global::directories().setOutputDir("./tmp/");
     srand(global::mpi().getRank());
@@ -148,8 +163,9 @@ int main(int argc, char *argv[])
     const plint ny   = 75;
     const plint nz   = 225;
     const T G      = 1.2;
-    T force        = 0.15/(T)ny; //1.e-3;
-    const plint maxIter  = 10000;
+    //T force        = 0.15/(T)ny; //1.e-3;
+    T force        = 0.30/(T)ny; 
+    //const plint maxIter  = 10000;
     const plint saveIter = 100;
     const plint statIter = 50;
 
@@ -196,7 +212,8 @@ int main(int argc, char *argv[])
     // Main loop over time iterations.
     for (plint iT=0; iT<maxIter; ++iT) {
         if (iT%saveIter==0) {
-            writePpms(heavyFluid, lightFluid, iT);
+	    writeVTK(heavyFluid, lightFluid, iT);
+            //writePpms(heavyFluid, lightFluid, iT);
         }
 
         // Time iteration for the light fluid.

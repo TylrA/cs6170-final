@@ -31,22 +31,22 @@
 		\centering
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig1.png}
+			\includegraphics[scale = .25]{fig1.png}
 			\caption{$t = 2100$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig2.png}
+			\includegraphics[scale = .25]{fig2.png}
 			\caption{$t = 2600$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig3.png}
+			\includegraphics[scale = .25]{fig3.png}
 			\caption{$t = 2900$}
 		\end{subfigure}
 		\begin{subfigure}
 			\centering
-			\includegraphics[scale = .3]{fig4.png}
+			\includegraphics[scale = .25]{fig4.png}
 			\caption{$t = 3300$}
 		\end{subfigure}
 	\end{figure*}
@@ -62,9 +62,15 @@
 
 	\section*{\normalfont Preliminary Results}
 	
-	\section*{\normalfont Modifications}
+	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
 	
-	\section*{\normalfont Summary}
+	\begin{gather*}
+		\frac{\partial \rho Y_i}{\partial t} + \nabla \dot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
+		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
+		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
+	\end{gather*} 
+	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. However we were unable to find software for useful 3D simulation so we are restricted to the 2D situation. Because of this restriction, there is 
+	 	\section*{\normalfont Summary}
 
 %  
 %	\section*{\normalfont Project Objective}  
