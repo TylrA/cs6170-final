@@ -69,7 +69,7 @@
 		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
 		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
 	\end{gather*} 
-	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. However we were unable to find software for useful 3D simulation so we are restricted to the 2D situation. Because of this restriction, there is 
+	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may stick to 2D. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
 	 	\section*{\normalfont Summary}
 
 %  

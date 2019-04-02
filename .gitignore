@@ -6,8 +6,11 @@ Proposal/final_proposal.synctex.gz
 Proposal/final_proposal.bbl
 Proposal/final_proposal.blg
 simulation/gifs/
+simulation/vtis/
 ProgressReport/progress_report.aux
 ProgressReport/progress_report.log
 ProgressReport/progress_report.out
 ProgressReport/progress_report.pdf
 ProgressReport/progress_report.synctex.gz
+simulation/palabos-v2.0r0/examples/showCases/multiComponent2d/rayleighTaylor2D
+simulation/palabos-v2.0r0/examples/showCases/multiComponent3d/rayleighTaylor3D
