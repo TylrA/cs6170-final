@@ -122,21 +122,26 @@ void rayleighTaylorSetup( MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
 }
 
 void writeGifs(MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
-               MultiBlockLattice2D<T, DESCRIPTOR>& lightFluid, plint iT)
+               MultiBlockLattice2D<T, DESCRIPTOR>& lightFluid, plint iT, string path)
 {
     ImageWriter<T> imageWriter("leeloo.map");
 //    imageWriter.writeScaledGif(createFileName("../../../../../gifs/rho_heavy_", iT, 6),
 //                               *computeDensity(heavyFluid));
-    imageWriter.writeScaledGif(createFileName("../../../../../gifs/rho_light_", iT, 6),
+    imageWriter.writeScaledGif(createFileName("../../../../../gifs/" + path + "/rho_light_", iT, 6),
                                *computeDensity(lightFluid));
 }
 
 int main(int argc, char *argv[])
 {
-    int num_iter;
-    cout << "Please enter how many iterations to run." << endl;
-    cin >> num_iter;
-    const plint maxIter = num_iter;
+//
+//    int num_iter;
+//    cout << "Please enter how many iterations to run." << endl;
+//    cin >> num_iter;
+//    const plint maxIter = num_iter;
+    const plint maxIter = atoi(argv[1]);
+    T rho1 = atof(argv[2]);
+    T rho0 = atof(argv[3]);
+    string path = argv[4];
 
     plbInit(&argc, &argv);
     global::directories().setOutputDir("./tmp/");
@@ -147,9 +152,9 @@ int main(int argc, char *argv[])
     const plint nx   = 1200;
     const plint ny   = 400;
     const T G      = 1.2;
-    // T force        = 0.15/(T)ny;
+     T force        = 0.15/(T)ny;
     //  T force        = 0.5/(T)ny;
-    T force        = 0.5/(T)ny;
+//    T force        = 0.5/(T)ny;
     // const plint maxIter  = 16000;
     const plint saveIter = 100;
     const plint statIter = 10;
@@ -165,9 +170,9 @@ int main(int argc, char *argv[])
     heavyFluid.periodicity().toggle(0,true);
     lightFluid.periodicity().toggle(0,true);
 
-    T rho1 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
+//    T rho1 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
     //  T rho0 = 0.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
-    T rho0 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
+//    T rho0 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
     // Store a pointer to all lattices (two in the present application) in a vector to
     //   create the Shan/Chen coupling therm. The heavy fluid being at the first place
     //   in the vector, the coupling term is going to be executed at the end of the call
@@ -196,7 +201,7 @@ int main(int argc, char *argv[])
     // Main loop over time iterations.
     for (plint iT=0; iT<maxIter; ++iT) {
         if (iT%saveIter==0) {
-            writeGifs(heavyFluid, lightFluid, iT);
+            writeGifs(heavyFluid, lightFluid, iT, path);
         }
 
         // Time iteration for the light fluid.
