@@ -26,7 +26,7 @@
 	% Motivation and a brief project description.
 	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to provide insights regarding structure that apply to RTI generally, including in the later stages of RTI development, using TDA methods.
 	
-	\section*{\normalfont Completed Milestones} We have successfully been able to install and run software that simulates RTI and saves the time-steps in 2D images which we can use further down the pipeline. Additionally, we have written software that extracts the isosurfaces of the images with which we can track bubble evolution and we have written software that smooths out noise in the vein of DON'T FORGET TO ANSWER ME. Lastly we have also installed recommended software and were able to get the examples running on Morse-Smale complex computations. For more information on these divergent paths, see the Modifications section. An example time evolution is shown below.
+	\section*{\normalfont Completed Milestones} We have successfully been able to install and run software that simulates RTI and saves the time-steps in 2D images which we can use further down the pipeline. Additionally, we have written software that extracts the isosurfaces of the images with which we can track bubble evolution and we have written software that smooths out noise using a regularized least squares method. Lastly we have also installed recommended software and were able to get the examples running on Morse-Smale complex computations. For more information on these divergent paths, see the Modifications section. An example time evolution is shown below.
 		\begin{figure*}[ht!]
 		\centering
 		\begin{subfigure}
@@ -66,7 +66,7 @@
 	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
 	
 	\begin{gather*}
-		\frac{\partial \rho Y_i}{\partial t} + \nabla \dot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
+		\frac{\partial \rho Y_i}{\partial t} + \nabla \cdot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
 		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
 		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
 	\end{gather*} 
@@ -160,6 +160,14 @@
 %%		\item How can we evaluate how successful your project is once it is completed?
 %%	\end{enumerate}
 %	To summarize, RTI is an important area of fluid dynamics and has many applications from the study of supernovae to fusion reactions. Our project aims to reproduce results of the paper and expand the existing understanding of RTI through simulation and TDA. We would like to see to what extent the paper's conclusions are dependent upon Morse-Smale complexes versus other simplicial complexes or different choices of Morse function. Time permitting, we may also analyze bubble formation given different intitial states or perturbations. To do this we will simulate our own time-step data using the physics of bubble formation. If successful, our project will roughly duplicate the experiments in the paper and be able to describe other meaningful properties of RTI.
-
+%\vskip15cm
+%
+%Let $\mathbb{M}$ be a smooth 2-manifold and let $f: \mathbb{M} \to \mathbb{R}$ be a smooth function. A \emph{critical point} $x_0 \in \mathbb{M}$ is a point such that $\nabla f(x_0) = 0$ and is \emph{non-degenerate} if the hessian $\Delta^2 f(x_0)$ is invertible. Then $f$ is called \emph{morse} if every critical point of $f$ is non-degenerate and the function value at each critical point is unique. 
+%
+%An \emph{integral line} through a point $x \in \mathbb{M}$ is a path $\gamma_x = \gamma(t) \in  \mathbb{M}, \gamma(0) = x$ where its derivative $\gamma'(t)$ and the gradient $\nabla f(\gamma(t))$ projected onto the tangent space at $\gamma(t)$ agree in direction at each point $\gamma(t)$. Denote org$(\gamma) = \lim\limits_{t \to -\infty}\gamma(t)$, dest$(\gamma) = \lim\limits_{t \to \infty}\gamma(t)$, then the stable and unstable manifolds are 
+%$$
+%	S(u) = \{u\} \cup \{x \in \mathbb{M}: \mathrm{dest}(\gamma_x) = u\},\ \ \ U(u) = \{u\} \cup \{y \in \mathbb{M}: \mathrm{org}(\gamma_y) = u\}
+%$$ 
+%respectively. A \emph{Morse-Smale function} $f$ is a Morse function whose stable and unstable manifolds intersect transversally. Assuming a Morse-Smale function, one can then ``superimpose" the manifolds to generate the Morse-Smale Complex.
 
 \end{document}
