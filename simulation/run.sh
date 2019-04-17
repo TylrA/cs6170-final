@@ -14,11 +14,16 @@ else
 fi
 cd ./gifs
 
-for i in 0 1 2 3 4 5 6 7 8 9
+#rho1s=(1.0 1.2 1.4 1.6 1.8)
+#rho0s=(1.0 0.8 0.6 0.4 0.2)
+rho1s=(5.0 20.0)
+rho0s=(1.0 0.05)
+
+for i in 0 1 2 3 4
 do
-    rm -rf "./gifs$i"
-    mkdir "./gifs$i"
-    cd "./gifs$i"
+    rm -rf "./gifs$i-${rho1s[i]}-${rho0s[i]}"
+    mkdir "./gifs$i-${rho1s[i]}-${rho0s[i]}"
+    cd "./gifs$i-${rho1s[i]}-${rho0s[i]}"
     for j in 0 1 2 3 4 5 6 7 8 9
     do
 	mkdir "./sim$j"
@@ -26,16 +31,12 @@ do
     cd ../
 done
 
-rho1s=(1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9)
-rho0s=(1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1)
-
 cd ../palabos-v2.0r0/examples/showCases/multiComponent2d
-for i in 0 1 2 3 4 5 6 7 8 9
+for i in 0 1 2 3 4
 do
     for j in 0 1 2 3 4 5 6 7 8 9
     do
-#        if ! ./rayleighTaylor2D 16000 ${rho1s[j]} ${rho0s[j]} "./gifs$i/sim$j"
-        if ! ./rayleighTaylor2D 6000 ${rho1s[j]} ${rho0s[j]} "./gifs$i/sim$j"
+        if ! ./rayleighTaylor2D 6000 ${rho1s[i]} ${rho0s[i]} "./gifs$i-${rho1s[i]}-${rho0s[i]}/sim$j"
         then
             printf "An error occured generating simulation\n"
             cd ../../../../

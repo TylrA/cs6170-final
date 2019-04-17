@@ -141,11 +141,6 @@ void writeGifs(MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
 
 int main(int argc, char *argv[])
 {
-//
-//    int num_iter;
-//    cout << "Please enter how many iterations to run." << endl;
-//    cin >> num_iter;
-//    const plint maxIter = num_iter;
     srand(time(NULL));
     const plint maxIter = atoi(argv[1]);
     T rho1 = atof(argv[2]);
@@ -154,7 +149,6 @@ int main(int argc, char *argv[])
 
     plbInit(&argc, &argv);
     global::directories().setOutputDir("./tmp/");
-    srand(global::mpi().getRank());
     
     const T omega1 = 1.0;
     const T omega2 = 1.0;
@@ -163,7 +157,6 @@ int main(int argc, char *argv[])
     const T G      = 1.2;
      T force        = 0.15/(T)ny;
     //  T force        = 0.5/(T)ny;
-//    T force        = 0.5/(T)ny;
     // const plint maxIter  = 16000;
     const plint saveIter = 100;
     const plint statIter = 10;
@@ -181,7 +174,7 @@ int main(int argc, char *argv[])
 
 //    T rho1 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
     //  T rho0 = 0.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
-//    T rho0 = 1.; // Fictitious density experienced by the partner fluid on a Bounce-Back node.
+
     // Store a pointer to all lattices (two in the present application) in a vector to
     //   create the Shan/Chen coupling therm. The heavy fluid being at the first place
     //   in the vector, the coupling term is going to be executed at the end of the call
