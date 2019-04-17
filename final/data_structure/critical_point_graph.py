@@ -3,11 +3,12 @@ import copy
 
 squared_euclid_error = 100.0     # I.e., critical points at distance of 10 pixels from previous?
 
+
 class CriticalPoint:
     def __init__(self, x, y, crit_type, birth_time):
-        self.x = x                            # x coordinate, float
-        self.y = y                            # y coordinate, float
-        self.crit_type = crit_type            # critical point type, either 'max' or 'min', char[]
+        self.x = x                                  # x coordinate, float
+        self.y = y                                  # y coordinate, float
+        self.crit_type = crit_type                  # critical point type, either 'max' or 'min', char[]
         self.birth_time = birth_time
 
     def __eq__(self, other):
@@ -18,17 +19,24 @@ class CriticalPoint:
 
         return True
 
+
 class Node:
     def __init__(self, critical_point):
-                self.critical_point = critical_point       # CriticalPoint of node
-                self.left = None                           # Left node reference
-                self.right = None                          # Right node reference
+        self.critical_point = critical_point       # CriticalPoint of node
+        self.left = None                           # Left node reference
+        self.right = None                          # Right node reference
 
     def append_right(self, node):
         self.right = node
 
     def append_left(self, node):
         self.left = node
+
+    def __eq__(self, other):
+        if self.critical_point != other.critical_point:
+            return False
+
+        return True
 
 
 class Graph:
@@ -59,26 +67,34 @@ class Graph:
                 self.nodes.remove(node)
                 return
 
-    # Reduce noisy critical points. Keep older living critical points
+    # Reduce noisy critical points. Keep older living critical points. Call after adding all nodes to graph
     def smooth_bumps(self):
         changed_flag = True
         while changed_flag:
             changed_flag = False
             for i in range(0, len(self.nodes) - 1):
-                if self.nodes[i] == self.nodes[i + 1]:
+                if self.nodes[i].critical_point == self.nodes[i + 1].critical_point:
                     changed_flag = True
-                    if self.nodes[i].birth_time < self.nodes[i + 1].birth_time:
+                    if self.nodes[i].critical_point.birth_time < self.nodes[i + 1].critical_point.birth_time:
                         self.delete_node(self.nodes[i + 1])
                     else:
                         self.delete_node(self.nodes[i])
                     break
-
-
-
 
     # This compares a previous time-step graph and returns critical points that were born and those that died
     def compare_with_previous_graph(self, previous_graph):
         critical_points_born = []
         critical_points_died = []
 
-        # this part needs to be discussed more and finished maybe together?
+        # this part needs to be discussed more and finished maybe together? Current version is naive. If a previous
+        # graph does not contain the critical point, then it has been born. If the new graph does not contain a
+        # previous critical point, it has died
+        for node in self.nodes:
+            if node not in previous_graph.nodes:
+                critical_points_born.append(copy.deepcopy(node.critical_point))
+
+        for node in previous_graph.nodes:
+            if node not in self.nodes:
+                critical_points_died.append(copy.deepcopy(node.critical_point))
+
+        return [critical_points_born, critical_points_died]
