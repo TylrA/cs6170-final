@@ -10,6 +10,7 @@ class CriticalPoint:
         self.y = y                                  # y coordinate, float
         self.crit_type = crit_type                  # critical point type, either 'max' or 'min', char[]
         self.birth_time = birth_time
+        self.death_time = None
 
     def __eq__(self, other):
         if self.crit_type != other.crit_type:
@@ -93,8 +94,33 @@ class Graph:
             if node not in previous_graph.nodes:
                 critical_points_born.append(copy.deepcopy(node.critical_point))
 
+        # Update born times of "same" nodes
+        for node in self.nodes:
+            if node in previous_graph.nodes:
+                ndx = previous_graph.nodes.index(node)
+                node.critical_point.birth_time = previous_graph.nodes[ndx].critical_point.birth_time
+
         for node in previous_graph.nodes:
             if node not in self.nodes:
                 critical_points_died.append(copy.deepcopy(node.critical_point))
 
         return [critical_points_born, critical_points_died]
+
+
+class PersistenceDiagram:
+    def __init__(self, graphs, end_time):
+        self.graphs = graphs                      # Python list of Graph objects
+        self.end_time = end_time                  # int or float defining end time of graph generation
+        self.diagram = generate_diagram()         # Python list of [,] birth/death pair
+
+    def generate_diagram(self):
+        points = []
+        for i in range(1, len(self.graphs)):
+            for critical_point in self.graphs[i].compare_with_previous_graph(self.graphs[i - 1])[1]:
+                points.append([critical_point.birth_time, critical_point.death_time])
+
+        for node in self.graphs[len(self.graphs) - 1]:
+            if node.critical_point.death_time is None:
+                points.append([node.critical_point.birth_time, self.end_time])
+
+        return points
