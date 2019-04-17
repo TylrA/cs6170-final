@@ -42,21 +42,39 @@ class Graph:
         self.nodes[len(self.nodes) - 1].append_left(self.nodes[len(self.nodes) - 2])
         self.nodes[len(self.nodes) - 2].append_right(self.nodes[len(self.nodes) - 1])
 
-    # def delete_node(self, node):
-    #     if len(self.nodes) == 0:
-    #         return
-    #     for i in range(0, len(self.nodes)):
-    #         if self.nodes[i] == node:
-    #             if i == 0:
-    #                 self.nodes[i + 1].left = None
-    #             elif i == len(self.nodes) - 1:
-    #                 self.nodes[i - 1].right = None
-    #             else:
-    #                 self.nodes[i + 1].left = self.nodes[i - 1]
-    #                 self.nodes[i - 1].right = self.nodes[i + 1]
-    #
-    #             self.nodes.remove(node)
-    #             return
+    # Delete node and update references
+    def delete_node(self, node):
+        if len(self.nodes) == 0:
+            return
+        for i in range(0, len(self.nodes)):
+            if self.nodes[i] == node:
+                if i == 0:
+                    self.nodes[i + 1].left = None
+                elif i == len(self.nodes) - 1:
+                    self.nodes[i - 1].right = None
+                else:
+                    self.nodes[i + 1].left = self.nodes[i - 1]
+                    self.nodes[i - 1].right = self.nodes[i + 1]
+
+                self.nodes.remove(node)
+                return
+
+    # Reduce noisy critical points. Keep older living critical points
+    def smooth_bumps(self):
+        changed_flag = True
+        while changed_flag:
+            changed_flag = False
+            for i in range(0, len(self.nodes) - 1):
+                if self.nodes[i] == self.nodes[i + 1]:
+                    changed_flag = True
+                    if self.nodes[i].birth_time < self.nodes[i + 1].birth_time:
+                        self.delete_node(self.nodes[i + 1])
+                    else:
+                        self.delete_node(self.nodes[i])
+                    break
+
+
+
 
     # This compares a previous time-step graph and returns critical points that were born and those that died
     def compare_with_previous_graph(self, previous_graph):

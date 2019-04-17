@@ -39,8 +39,7 @@ do
             printf "An error occured generating simulation\n"
             cd ../../../../
             exit 1
-        else
-            cd ../../../../
         fi
     done
 done
+cd ../../../../
