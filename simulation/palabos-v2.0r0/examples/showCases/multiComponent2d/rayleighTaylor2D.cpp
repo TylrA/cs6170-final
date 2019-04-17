@@ -35,6 +35,8 @@
 #include "palabos2D.hh"
 #include <cstdlib>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace plb;
 using namespace std;
@@ -44,6 +46,12 @@ typedef double T;
 // Use a grid which additionally to the f's stores two variables for
 //   the external force term.
 #define DESCRIPTOR descriptors::ForcedShanChenD2Q9Descriptor
+
+
+static int get_my_next_rando()
+{
+    return rand() % 10 + 1;
+}
 
 /// Initial condition: heavy fluid on top, light fluid on bottom.
 /** This functional is going to be used as an argument to the function "applyIndexed",
@@ -69,7 +77,7 @@ public:
         // Add a random perturbation to the initial condition to instantiate the
         //   instability.
         if ( (topLayer && iY>ny/2) || (!topLayer && iY <= ny/2) ) {
-            rho += rand_val * densityFluctuations;
+            rho += /*rand_val*/get_my_next_rando() * densityFluctuations;
         }
         else {
             rho = almostNoFluid;
@@ -138,6 +146,7 @@ int main(int argc, char *argv[])
 //    cout << "Please enter how many iterations to run." << endl;
 //    cin >> num_iter;
 //    const plint maxIter = num_iter;
+    srand(time(NULL));
     const plint maxIter = atoi(argv[1]);
     T rho1 = atof(argv[2]);
     T rho0 = atof(argv[3]);

@@ -1,7 +1,7 @@
 import numpy as np
 import copy
 
-squared_euclid_error = 100.0     # I.e., critical points at distance of 10 pixels from previous?
+squared_euclid_error = 100.0     # cutoff distance for critical points to be considered "equal"?
 
 
 class CriticalPoint:

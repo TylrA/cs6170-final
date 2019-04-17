@@ -34,7 +34,8 @@ for i in 0 1 2 3 4 5 6 7 8 9
 do
     for j in 0 1 2 3 4 5 6 7 8 9
     do
-        if ! ./rayleighTaylor2D 16000 ${rho1s[j]} ${rho0s[j]} "./gifs$i/sim$j"
+#        if ! ./rayleighTaylor2D 16000 ${rho1s[j]} ${rho0s[j]} "./gifs$i/sim$j"
+        if ! ./rayleighTaylor2D 6000 ${rho1s[j]} ${rho0s[j]} "./gifs$i/sim$j"
         then
             printf "An error occured generating simulation\n"
             cd ../../../../
