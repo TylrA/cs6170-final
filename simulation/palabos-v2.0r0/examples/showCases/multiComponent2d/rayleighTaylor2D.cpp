@@ -61,9 +61,11 @@ static int get_my_next_rando()
 template<typename T, template<typename U> class Descriptor>
 class TwoLayerInitializer : public OneCellIndexedWithRandFunctional2D<T,Descriptor> {
 public:
-    TwoLayerInitializer(plint ny_, bool topLayer_)
+    TwoLayerInitializer(plint ny_, bool topLayer_, T rho1_, T rho0_)
         : ny(ny_),
-          topLayer(topLayer_)
+          topLayer(topLayer_),
+   	  rho1(rho1_),
+   	  rho0(rho0_)
     { }
     TwoLayerInitializer<T,Descriptor>* clone() const {
         return new TwoLayerInitializer<T,Descriptor>(*this);
@@ -73,14 +75,17 @@ public:
         T almostNoFluid       = 1.e-4;
         Array<T,2> zeroVelocity (0.,0.);
 
-        T rho = (T)1;
+        T rho = (T)rho1;
         // Add a random perturbation to the initial condition to instantiate the
         //   instability.
         if ( (topLayer && iY>ny/2) || (!topLayer && iY <= ny/2) ) {
             rho += /*rand_val*/get_my_next_rando() * densityFluctuations;
         }
         else {
-            rho = almostNoFluid;
+	    if (rho0 < almostNoFluid)
+		rho = almostNoFluid;
+            else
+		rho = rho0;
         }
 
         iniCellAtEquilibrium(cell, rho, zeroVelocity);
@@ -88,6 +93,8 @@ public:
 private:
     plint ny;
     bool topLayer;
+    T rho1;
+    T rho0;
 };
 
 
@@ -112,10 +119,10 @@ void rayleighTaylorSetup( MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
    
     // Initialize top layer.
     applyIndexed(heavyFluid, Box2D(0, nx-1, 0, ny-1),
-                 new TwoLayerInitializer<T,DESCRIPTOR>(ny, true) );
+                 new TwoLayerInitializer<T,DESCRIPTOR>(ny, true, rho1, rho0) );
     // Initialize bottom layer.
     applyIndexed(lightFluid, Box2D(0, nx-1, 0, ny-1),
-                 new TwoLayerInitializer<T,DESCRIPTOR>(ny, false) );
+                 new TwoLayerInitializer<T,DESCRIPTOR>(ny, false, rho1, rho0) );
 
     // Let's have gravity acting on the heavy fluid only. This represents a situation
     //   where the molecular mass of the light species is very small, and thus the
