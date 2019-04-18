@@ -2,6 +2,7 @@ import numpy as np
 import sys
 import os
 
+# This  may actually be non-useful. I don't recall if this works on non-functional datasets
 
 def denoise_using_reg_ls(sample, lambd):
     dim = sample.shape[0]

@@ -1,7 +1,7 @@
-import numpy as np
+# import numpy as np
 import copy
 
-squared_euclid_error = 100.0     # cutoff distance for critical points to be considered "equal"?
+squared_euclid_error = 100.0     # squared  cutoff distance for critical points to be considered "equal"?
 
 
 class CriticalPoint:
@@ -42,11 +42,12 @@ class Node:
 
 class Graph:
     # Initialization requires at least one critical point
-    def __init__(self, critical_point):
-        self.nodes.append(Node(critical_point))
+    def __init__(self):
+        self.nodes = []
 
     # Critical points MUST be added by traversing the curve of the boundary
-    def add_node(self, node):
+    def add_node(self, critical_point):
+        node = Node(critical_point)
         self.nodes.append(copy.deepcopy(node))
         self.nodes[len(self.nodes) - 1].append_left(self.nodes[len(self.nodes) - 2])
         self.nodes[len(self.nodes) - 2].append_right(self.nodes[len(self.nodes) - 1])
@@ -111,7 +112,7 @@ class PersistenceDiagram:
     def __init__(self, graphs, end_time):
         self.graphs = graphs                      # Python list of Graph objects
         self.end_time = end_time                  # int or float defining end time of graph generation
-        self.diagram = generate_diagram()         # Python list of [,] birth/death pair
+        self.diagram = self.generate_diagram()         # Python list of [,] birth/death pair
 
     def generate_diagram(self):
         points = []
