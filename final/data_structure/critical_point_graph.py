@@ -48,9 +48,10 @@ class Graph:
     # Critical points MUST be added by traversing the curve of the boundary
     def add_node(self, critical_point):
         node = Node(critical_point)
-        self.nodes.append(copy.deepcopy(node))
-        self.nodes[len(self.nodes) - 1].append_left(self.nodes[len(self.nodes) - 2])
-        self.nodes[len(self.nodes) - 2].append_right(self.nodes[len(self.nodes) - 1])
+        if node not in self.nodes:
+            self.nodes.append(copy.deepcopy(node))
+            self.nodes[len(self.nodes) - 1].append_left(self.nodes[len(self.nodes) - 2])
+            self.nodes[len(self.nodes) - 2].append_right(self.nodes[len(self.nodes) - 1])
 
     # Delete node and update references
     def delete_node(self, node):
@@ -120,7 +121,7 @@ class PersistenceDiagram:
             for critical_point in self.graphs[i].compare_with_previous_graph(self.graphs[i - 1])[1]:
                 points.append([critical_point.birth_time, critical_point.death_time])
 
-        for node in self.graphs[len(self.graphs) - 1]:
+        for node in self.graphs[len(self.graphs) - 1].nodes:
             if node.critical_point.death_time is None:
                 points.append([node.critical_point.birth_time, self.end_time])
 

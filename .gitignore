@@ -16,4 +16,6 @@ simulation/palabos-v2.0r0/examples/showCases/multiComponent2d/rayleighTaylor2D
 simulation/palabos-v2.0r0/examples/showCases/multiComponent3d/rayleighTaylor3D
 simulation/palabos-v2.0r0/examples/showCases/multiComponent2d/tmp/plbWarning.dat
 final/.idea
-
+final/data_structure/__pycache__/
+final/sklearn_tda/__pycache__/
+final/smoothed_boundary_points/

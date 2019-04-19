@@ -4,6 +4,7 @@ from sklearn_tda import vector_methods
 from sklearn.svm import SVC
 import numpy as np
 from scipy.interpolate import splprep, splev
+import sys
 
 
 def get_critical_points_from_file(path, time):
@@ -13,13 +14,14 @@ def get_critical_points_from_file(path, time):
     with open(path, 'r') as f:
         lines = f.readlines()
         for line in lines:
-            x_coords.append(float(line.split(',')[0]))
-            y_coords.append(float(line.split(',')[1]))
+            temp_line = line .strip('\n')
+            x_coords.append(float(temp_line.split(' ')[0]))
+            y_coords.append(float(temp_line.split(' ')[1]))
 
     # Interpolate to non-functional spline
     x_coords = np.array(x_coords)
     y_coords = np.array(y_coords)
-    tck, u, fp, ler, msg = splprep([x_coords, y_coords], s=0)
+    tck, u= splprep(x=[x_coords, y_coords],  w=None)
     new_points = splev(u, tck)
     x_coords = new_points[0]
     y_coords = new_points[1]
@@ -29,11 +31,11 @@ def get_critical_points_from_file(path, time):
 
     critical_points = []
 
-    for i_ in range(1, len(x_coords)):
-        for j in range(1, len(y_coords)):
+    for i_ in range(1, len(x_coords) -  1):
+        for j in range(1, len(y_coords) - 1):
             # check when the difference changes its sign
-            prev_dydx = diff_x[i_ - 1] / diff_y[i_ - 1]
-            next_dydx = diff_x[i_] / diff_y[i_]
+            prev_dydx = diff_y[i_ - 1] / diff_x[i_ - 1]
+            next_dydx = diff_y[i_] / diff_x[i_]
             if prev_dydx < 0.0 <= next_dydx:
                 critical_points.append(critical_point_graph.CriticalPoint(x_coords[i_], y_coords[i_], 'max', time))
             elif prev_dydx > 0.0 >= next_dydx:
@@ -46,7 +48,11 @@ def build_persistence_diagram_from_data(path_to_files):
     point_files = os.listdir(path_to_files)
     point_files.sort()
     graphs = []
+    sys.stdout.write('\nBuilding Persistence Diagram\n')
+    sys.stdout.write('Progress: [%s]' % (' ' * 100))
+    sys.stdout.flush()
     for k, point_file in enumerate(point_files):
+        count = int(float(k / len(point_files)) * 100.0)
         critical_points = get_critical_points_from_file(path_to_files + "/" + point_file, k)
 
         # Build graph for each file and smooth bumps
@@ -57,8 +63,16 @@ def build_persistence_diagram_from_data(path_to_files):
 
         graphs.append(graph)
 
+        # Update progress
+        sys.stdout.write('\rProgress: [%s' % ('#' * count))
+        sys.stdout.write('%s]' % (' ' * (100 - count)))
+        sys.stdout.flush()
+
+    sys.stdout.write('\rProgress: [%s]' % ('#' * 100))
+    sys.stdout.flush()
+
     # Use the number of data files per simulation as the 'death time'
-    return critical_point_graph.PersistenceDiagram(graphs, len(point_files)).diagram
+    return np.array(critical_point_graph.PersistenceDiagram(graphs, len(point_files)).diagram)
 
 
 def generate_diagrams(num_classes_, num_samples_):
