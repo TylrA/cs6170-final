@@ -42,8 +42,9 @@ class Node:
 
 class Graph:
     # Initialization requires at least one critical point
-    def __init__(self):
+    def __init__(self, time):
         self.nodes = []
+        self.time = time
 
     # Critical points MUST be added by traversing the curve of the boundary
     def add_node(self, critical_point):
@@ -104,6 +105,7 @@ class Graph:
 
         for node in previous_graph.nodes:
             if node not in self.nodes:
+                node.critical_point.death_time = self.time
                 critical_points_died.append(copy.deepcopy(node.critical_point))
 
         return [critical_points_born, critical_points_died]
@@ -113,16 +115,16 @@ class PersistenceDiagram:
     def __init__(self, graphs, end_time):
         self.graphs = graphs                      # Python list of Graph objects
         self.end_time = end_time                  # int or float defining end time of graph generation
-        self.diagram = self.generate_diagram()         # Python list of [,] birth/death pair
+        self.diagram = []        # Python list of [,] birth/death pair
 
     def generate_diagram(self):
         points = []
         for i in range(1, len(self.graphs)):
             for critical_point in self.graphs[i].compare_with_previous_graph(self.graphs[i - 1])[1]:
-                points.append([critical_point.birth_time, critical_point.death_time])
+                points.append([float(critical_point.birth_time), float(critical_point.death_time)])
 
         for node in self.graphs[len(self.graphs) - 1].nodes:
             if node.critical_point.death_time is None:
-                points.append([node.critical_point.birth_time, self.end_time])
+                points.append([float(node.critical_point.birth_time), float(self.end_time)])
 
-        return points
+        self.diagram = points
