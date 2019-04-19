@@ -41,6 +41,7 @@
 #include "atomicBlock/dataField2D.h"
 #include <cmath>
 #include <limits>
+//#include <iostream>
 
 namespace plb {
 
@@ -263,11 +264,11 @@ template<typename T, template<typename U> class Descriptor>
 void BoxDensityFunctional2D<T,Descriptor>::process (
         Box2D domain, BlockLattice2D<T,Descriptor>& lattice, ScalarField2D<T>& scalarField)
 {
-    Dot2D offset = computeRelativeDisplacement(lattice, scalarField);
+    Dot2D offset = computeRelativeDisplacement(lattice, scalarField);  
     for (plint iX=domain.x0; iX<=domain.x1; ++iX) {
         for (plint iY=domain.y0; iY<=domain.y1; ++iY) {
             scalarField.get(iX+offset.x,iY+offset.y)
-                = lattice.get(iX,iY).computeDensity();
+                = (double)((int)(lattice.get(iX,iY).computeDensity() * 5.0)) / 5.0;
         }
     }
 }

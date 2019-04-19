@@ -46,7 +46,7 @@ void N_BoxDensityFunctional2D<T,Descriptor>::process (
         Box2D domain, BlockLattice2D<T,Descriptor>& lattice, NTensorField2D<T>& scalarField)
 {
     PLB_PRECONDITION( scalarField.getNdim()==1 );
-    Dot2D offset = computeRelativeDisplacement(lattice, scalarField);
+    Dot2D offset = computeRelativeDisplacement(lattice, scalarField); 
     for (plint iX=domain.x0; iX<=domain.x1; ++iX) {
         for (plint iY=domain.y0; iY<=domain.y1; ++iY) {
             *scalarField.get(iX+offset.x,iY+offset.y)
@@ -92,6 +92,7 @@ void Masked_N_BoxDensityFunctional2D<T,Descriptor>::process (
             }
         }
     }
+    
 }
 
 template<typename T, template<typename U> class Descriptor> 

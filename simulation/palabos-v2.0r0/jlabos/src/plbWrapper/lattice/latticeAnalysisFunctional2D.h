@@ -34,7 +34,6 @@
 
 namespace plb {
 
-
 template<typename T, template<typename U> class Descriptor> 
 class N_BoxDensityFunctional2D : public BoxProcessingFunctional2D_LN<T,Descriptor,T>
 {

@@ -144,6 +144,7 @@ void writeGifs(MultiBlockLattice2D<T, DESCRIPTOR>& heavyFluid,
 //                               *computeDensity(heavyFluid));
     imageWriter.writeScaledGif(createFileName("../../../../../gifs/" + path + "/rho_light_", iT, 6),
                                *computeDensity(lightFluid));
+
 }
 
 int main(int argc, char *argv[])
