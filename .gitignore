@@ -18,7 +18,6 @@ simulation/palabos-v2.0r0/examples/showCases/multiComponent2d/tmp/plbWarning.dat
 final/.idea
 final/data_structure/__pycache__/
 final/sklearn_tda/__pycache__/
-final/smoothed_boundary_points/
 simulation/point_extraction/.idea/workspace.xml
 simulation/point_extraction/f/BlurFilter.class
 simulation/point_extraction/f/ExteriorFilter.class
