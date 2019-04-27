@@ -8,7 +8,7 @@ import sys
 def print_diagram_to_file(gifs, sim, diagram):
     cwd = os.getcwd()
     parent = os.path.join(cwd, os.path.join(os.path.dirname(__file__)))
-    print_path = parent + "../DataBackup/bubble_backup/ImageBarcodes/"
+    print_path = parent + "/../DataBackup/bubble_backup/ImageBarcodes/"
 
     with open(print_path + "dim0/" + "gifs%i-sim%i.txt" % (gifs, sim), 'w+') as f:
         for entry in diagram:
@@ -112,35 +112,5 @@ def generate_diagrams():
 
 if __name__ == '__main__':
     generate_diagrams()
-    #
-    # training_diagrams = []
-    # for i in range(0, len(training_barcodes)):
-    #     training_diagrams.append(np.array(training_barcodes[i]))
-    #
-    # testing_diagrams = []
-    # for i in range(0, len(test_barcodes)):
-    #     testing_diagrams.append(np.array(test_barcodes[i]))
-    #
-    # bandwidths = [0.5, 0.7, 0.9, 1.1, 1.3, 1.5]
-    #
-    # cwd = os.getcwd()
-    # parent = os.path.join(cwd, os.path.join(os.path.dirname(__file__)))
-    # with open(parent + "/diagram_training_results.txt", 'w') as f:
-    #
-    #     # Default Kernel
-    #     print("\nUsing default RBF Kernel\n")
-    #     run_tests(bandwidths, None, training_labels, training_barcodes, test_labels, test_barcodes)
-    #
-    #     # Linear Kernel
-    #     print("\nUsing Linear Kernel\n")
-    #     run_tests(bandwidths, 'linear', training_labels, training_barcodes, test_labels, test_barcodes)
-    #
-    #     # Polynomial Kernel
-    #     print("\nUsing Cubic Polynomial Kernel\n")
-    #     run_tests(bandwidths, 'poly', training_labels, training_barcodes, test_labels, test_barcodes)
-    #
-    #     # Sigmoid Kernel
-    #     print("\nUsing Sigmoid Kernel\n")
-    #     run_tests(bandwidths, 'sigmoid', training_labels, training_barcodes, test_labels, test_barcodes)
 else:
     exit(-1)

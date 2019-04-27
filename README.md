@@ -17,11 +17,20 @@ machines. After this is done, `cd` again back to `/cs6170-final`.
 
 Next comes the boundary extraction. 
 
+INSERT HOW TO EXTRACT BOUNDARIES HERE
+
 After boundaries have been extracted, to generate critical diagrams, run
 ```python
 python3 GenerateCriticalDiagrams.py
 ```
 Status bars will show you the progress. This may take a couple hours.
+
+Next we must install local versions of Ripser and Hera interfaces. To do so,
+`cd` again back to `/cs6170-final` and then type
+```bash
+cd Proj2Utilities; bash ./install.sh
+```
+
 ## Testing
 To reproduce the results of the test, make sure you are in the `/cs6170-final`
 directory and run
