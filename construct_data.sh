@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-cd ./simulation/
-bash ./run.sh     # Create simulation. This takes a VERY LONG time. Approx 12 hours.
-cd ../
+#cd ./simulation/
+#bash ./simulate.sh     # Create simulation. This takes a VERY LONG time. Approx 12 hours.
+#cd ../
 
 ###################################
 #    CONSTRUCT BOUNDARIES HERE    #

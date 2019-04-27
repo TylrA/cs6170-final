@@ -7,29 +7,16 @@ the Testing section below.
 
 ## Data Construction
 
-First, `cd` to the directory `/cs6170-final`. 
-To run the simulation and generate the images, run
+To generate data for the Testing section below, first, `cd` to the 
+directory `/cs6170-final`. Then run
 ```bash
-cd simulation; bash ./run.sh
+bash ./construct_data.sh
 ```
-This will take quite a while. It took us around 12 or more hours on the CADE 
-machines. After this is done, `cd` again back to `/cs6170-final`. 
-
-Next comes the boundary extraction. 
-
-INSERT HOW TO EXTRACT BOUNDARIES HERE
-
-After boundaries have been extracted, to generate critical diagrams, run
-```python
-python3 GenerateCriticalDiagrams.py
-```
-Status bars will show you the progress. This may take a couple hours.
-
-Next we must install local versions of Ripser and Hera interfaces. To do so,
-`cd` again back to `/cs6170-final` and then type
-```bash
-cd Proj2Utilities; bash ./install.sh
-```
+Keep in mind that this will take a long time, perhaps an entire day. If you 
+wish to test portions of this construction, the bash script is simple
+enough that you will know which portion to comment out. Simulation and 
+boundary extraction take the longest and they are the first two portions
+in the bash script. The rest may take about 30 minutes.
 
 ## Testing
 To reproduce the results of the test, make sure you are in the `/cs6170-final`

@@ -102,7 +102,7 @@ def generate_diagrams():
     dirs_by_label = os.listdir(main_points_dir)
     dirs_by_label.sort()
     for i_ in range(0, len(dirs_by_label)):
-        print("\nBuilding diagrams for class %i / %i" % (i_, len(dirs_by_label)))
+        print("\nBuilding diagrams for class %i / %i" % (i_ + 1, len(dirs_by_label)))
         label_abs_dir = main_points_dir + "/" + dirs_by_label[i_]
         simulation_dirs = os.listdir(label_abs_dir)
 

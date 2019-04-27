@@ -15,7 +15,7 @@ def construct_barcodes(parent, image_boundaries_path, barcodes_path):
         image_names.append(im_dir.replace(".txt", ""))
 
     print("Constructing Barcodes")
-    sys.stdout.write('Progress: [%s]' % (' ' * 80))
+    sys.stdout.write('Progress: [%s]' % (' ' * len(image_boundaries_dirs)))
     sys.stdout.flush()
     for i, im_dir in enumerate(image_boundaries_dirs):
         process = Popen([parent + "/../ripser/ripser", im_dir, "--format", "point-cloud"], stdout=PIPE)
@@ -28,7 +28,7 @@ def construct_barcodes(parent, image_boundaries_path, barcodes_path):
         flag0 = False
         flag1 = False
         for line in lines:
-            test_line = line.lstrip(' ')
+            test_line = line.strip()
             if line == "":
                 continue
             elif test_line == "persistence intervals in dim 0:":
@@ -40,16 +40,15 @@ def construct_barcodes(parent, image_boundaries_path, barcodes_path):
                 continue
 
             elif flag0 or flag1:
-                l_trim = test_line.lstrip(" [-")
-                r_trim = l_trim.rstrip(" -)\n")
-                trimmed_line = r_trim.replace(",", " ")
-
-                # Remove barcode with infinite persistence
-                if flag0 and len(trimmed_line.strip().split(" ")) > 1:
-                    if trimmed_line.strip().split(" ")[1] != "":
+                # Ignore barcode with infinite persistence
+                if ", )" not in test_line:
+                    l_trim = test_line.lstrip("[-")
+                    r_trim = l_trim.rstrip("-)\n")
+                    trimmed_line = r_trim.replace(",", " ")
+                    if flag0:
                         dim0lines.append(trimmed_line)
-                else:
-                    dim1lines.append(trimmed_line)
+                    else:
+                        dim1lines.append(trimmed_line)
 
         # Remove duplicate entries
         dim0lines = list(set(dim0lines))
@@ -64,34 +63,17 @@ def construct_barcodes(parent, image_boundaries_path, barcodes_path):
                 print(line, file=f)
 
         sys.stdout.write('\rProgress: [%s' % ('#' * (i + 1)))
-        sys.stdout.write('%s]' % (' ' * (80 - (i + 1))))
+        sys.stdout.write('%s]' % (' ' * (len(image_boundaries_dirs) - (i + 1))))
         sys.stdout.flush()
-
-    # For some reason the dim1 lines print differently. Perhaps this is a bug in ripser?
-    image_boundaries_dirs_temp = os.listdir(parent + "/../Data/ImageBarcodes/dim1/")
-    image_boundaries_dirs = []
-    for im_dir in image_boundaries_dirs_temp:
-        image_boundaries_dirs.append(parent + "/../Data/ImageBarcodes/dim1/" + im_dir)
-    for im_dir in image_boundaries_dirs:
-        lines = []
-        with open(im_dir, "r") as f:
-            content = f.readlines()
-            for i, line in enumerate(content):
-                trim_line = line.rstrip("\n")
-                temp_line = trim_line.split(" ")
-                if trim_line.split(" ")[1] != "":
-                    lines.append(trim_line)
-
-        with open(im_dir, "w") as f:
-            for line in lines:
-                print(line, file=f)
-
-
 
 
 if __name__ == '__main__':
-    Part1.construct_barcodes()
-
+    cwd = os.getcwd()
+    parent = os.path.join(cwd, os.path.join(os.path.dirname(__file__)))
+    construct_barcodes(parent=parent, image_boundaries_path=parent + "../../DataBackup/ripser_backup/ImageBoundaries/",
+                       barcodes_path="../../DataBackup/ripser_backup/ImageBarcodes/")
+    sys.stdout.write('\n')
+    sys.stdout.flush()
 
 else:
     exit(-1)
