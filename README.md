@@ -16,7 +16,7 @@ Keep in mind that this will take a long time, perhaps an entire day. If you
 wish to test portions of this construction, the bash script is simple
 enough that you will know which portion to comment out. Simulation and 
 boundary extraction take the longest and they are the first two portions
-in the bash script. The rest may take about 30 minutes.
+in the bash script. The rest may take about two hours.
 
 ## Testing
 To reproduce the results of the test, make sure you are in the `/cs6170-final`

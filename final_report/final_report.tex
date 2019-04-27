@@ -22,7 +22,7 @@
 	\maketitle 
 	\hrule 
 	\vskip 0.5cm
-	\section{Grading Rubric}
+	\section{Paper Rubric}
 	\begin{enumerate}
 		\item Team Members:  the names and UID of your team members.
 		\item Introduction:  Motivation  and  a  brief  project  description.   What  is  the  main  objective  of  your project?  What is an overview of your strategy to achieve your objective?
@@ -45,9 +45,27 @@
 	
 	\section*{\normalfont Introduction}
 	% Motivation and a brief project description.
-	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to provide insights regarding structure that apply to RTI generally, including in the later stages of RTI development, using TDA methods.
+	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to use machine-learning to construct a classifier that accurately predicts the mixing-specie using topological data analysis (TDA) and other methods learned throughout the course. To do so, we will compare two different classifiers. The first is a classifier constructed using persistent homology on the mixing boundary. The second classifier is constructed on the mixing boundary using what we later define as \emph{critical diagrams}. This path is inspired directly by the material we have learned throughout the course.
 	
-	\section*{\normalfont Completed Milestones} We have successfully been able to install and run software that simulates RTI and saves the time-steps in 2D images which we can use further down the pipeline. Additionally, we have written software that extracts the isosurfaces of the images with which we can track bubble evolution and we have written software that smooths out noise using a regularized least squares method. Lastly we have also installed recommended software and were able to get the examples running on Morse-Smale complex computations. For more information on these divergent paths, see the Modifications section. An example time evolution is shown below.
+	\section*{\normalfont Technical Contributions} 
+	\section*{\normalfont Data}
+	The data we used was simulated using the Palabos library, located at \url{http://www.palabos.org/}. This library specializes in modeling fluid dynamics. A \emph{mixing class} is an ordered pair $(\rho_1, \rho_0)$ of densities of fluids whereby $\rho_1$ is the density of the heavier top fluid and $\rho_0$ is the density of the lighter bottom fluid. Using the above mentioned software, we chose four mixing classes, 
+	$$
+		(1.0, 0.0), \ \ (0.8, 0.0), \ \ (1.0, 0.2), \ \ (0.8, 0.2)
+	$$
+	and for each mixing class we ran 10 simulations. Each simulation had a different randomly generated initial condition leading to different mixing behavior. Both mixing classes $(1.0, 0.0), (0.8, 0.0)$ had 51 images generated during the simulation. The mixing class $(1.0, 0.2)$ had 71 images per simulation and the mixing class $(0.8, 0.2)$ had 67 images per simulation. These images, in \texttt{.gif} format, were the source of our data for the entire project. 
+	
+	We were unable to use more mixing classes because of the amount of time it takes to run the software and extract boundaries as well as the fact that we were unable to develop robust boundary extraction software for some of the more wild images generated for other mixing specie. Additionally, the densities above are purely numeric. No fluid has a density of 0.0. However the software mentioned above would break whenever we used density values outside the interval $[0.0, 1.0]$ so we were restricted to this range. Thus the fluid densities do not represent actually existing fluids. 
+	
+	\section*{\normalfont Background and Related Work}
+	 
+	
+	\section*{\normalfont Methods}
+	\section*{\normalfont Results and Insights}
+	\section*{\normalfont Evaluation}
+	\section*{\normalfont Deliverables}
+	\section*{\normalfont Conclusions and Discussions}
+	
 %		\begin{figure*}[ht!]
 %		\centering
 %		\begin{subfigure}
@@ -73,30 +91,30 @@
 %	\end{figure*}
 %	
 	
-	\section*{\normalfont Upcoming Milestones} The next milestones are:
-	\begin{enumerate}
-%		\item Smooth out the isosurfaces so that we can better track bubble evolution.
-		\item Implement a height function to track critical points and the evolution of bubbles.
-		\item Construct a persistence diagram describing the birth and death of bubbles.
-		\item Possibly classify simulations by density or other parameters by their persistence diagrams. I.e., is this bubble evolution symptomatic of the mixing of air and water?
-	\end{enumerate} 
-
-	\section*{\normalfont Preliminary Results}
-	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have also done.
-	
-	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
-	
-	\begin{gather*}
-		\frac{\partial \rho Y_i}{\partial t} + \nabla \cdot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
-		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
-		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
-	\end{gather*} 
-	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch quickly. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may choose to use the 2-dimensional version. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species using TDA and machine-learning. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
-	
-	 	\section*{\normalfont Summary}
-	We have arranged a process to acquire the data necessary for our research over two dimensional RTIs, including the simulation and the extraction of isosurfaces from said simulation. We hope to acquire three dimensional RTI data as well. Regarding the data, we still have not utilized topological data analysis to perform the essence of our research. This should include several topological filtrations.
-	
-	With the filtrations we plan to classify simulations by the structure of their RTIs. Factors that will be considered include the birth and death times of bubbles, as well as their size.
+%	\section*{\normalfont Upcoming Milestones} The next milestones are:
+%	\begin{enumerate}
+%%		\item Smooth out the isosurfaces so that we can better track bubble evolution.
+%		\item Implement a height function to track critical points and the evolution of bubbles.
+%		\item Construct a persistence diagram describing the birth and death of bubbles.
+%		\item Possibly classify simulations by density or other parameters by their persistence diagrams. I.e., is this bubble evolution symptomatic of the mixing of air and water?
+%	\end{enumerate} 
+%
+%	\section*{\normalfont Preliminary Results}
+%	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have also done.
+%	
+%	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
+%	
+%	\begin{gather*}
+%		\frac{\partial \rho Y_i}{\partial t} + \nabla \cdot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
+%		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
+%		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
+%	\end{gather*} 
+%	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch quickly. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may choose to use the 2-dimensional version. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species using TDA and machine-learning. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
+%	
+%	 	\section*{\normalfont Summary}
+%	We have arranged a process to acquire the data necessary for our research over two dimensional RTIs, including the simulation and the extraction of isosurfaces from said simulation. We hope to acquire three dimensional RTI data as well. Regarding the data, we still have not utilized topological data analysis to perform the essence of our research. This should include several topological filtrations.
+%	
+%	With the filtrations we plan to classify simulations by the structure of their RTIs. Factors that will be considered include the birth and death times of bubbles, as well as their size.
 
 
 \end{document}
