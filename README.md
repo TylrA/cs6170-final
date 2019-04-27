@@ -1,13 +1,32 @@
 # cs6170-final
 
-## Installation
-There are a few libraries I had to install. Unfortunately I do not remember which ones but it was not difficult to do when you look at the compilation errors and do a little googling. I do remember the strangest library we need is eigen3 (I only had to download 3 libraries). To install eigen3, simply use  
-``` 
-sudo apt update
-sudo apt install libeigen3-dev
-```` 
-The code is a modified version of the original which can be found here: http://www.palabos.org/download-ql. A direct download would not build the simulation we needed so this git version should be ok (it works for me at least). Also, after installing the necessary libraries, there is a bash script that does some additional cleanup of files between simulations and constructs the images. To use it, just run `bash ./run.sh`. If `.` is the root directory of the project, then `cd ./simulation` to get to the bash script. 
+The final project has many steps of pre-processing. This readme explains how
+to construct the data and then how to run the tests. If you do not wish to 
+construct the data, pre-processed data is included so you may skip to
+the Testing section below.
 
-The simulation spits out a bunch of `.gifs` in the directory `./simulation/gifs` which we can use for boundary extraction and can make into a movie if we wish. Lastly, for some reason it generates two types of `.gifs` depending on light and heavy fluids. I have not tried removing one of which because I am lazy and didn't want to break anything. 
+## Data Construction
 
-When you run the the script, after compilation you will be prompted asking how many iterations you would like to run. In order to see the simulation develop, choose around 10000. The default was 16000 but that seemed like overkill.
+First, `cd` to the directory `/cs6170-final`. 
+To run the simulation and generate the images, run
+```bash
+cd simulation; bash ./run.sh
+```
+This will take quite a while. It took us around 12 or more hours on the CADE 
+machines. After this is done, `cd` again back to `/cs6170-final`. 
+
+Next comes the boundary extraction. 
+
+After boundaries have been extracted, to generate critical diagrams, run
+```python
+python3 GenerateCriticalDiagrams.py
+```
+Status bars will show you the progress. This may take a couple hours.
+## Testing
+To reproduce the results of the test, make sure you are in the `/cs6170-final`
+directory and run
+```bash
+bash ./run.sh
+```
+This will start a script to reproduce the results of the report. Simply follow
+the prompts.

@@ -6,7 +6,7 @@ mkdir ./gifs
 cd ./palabos-v2.0r0/examples/showCases/multiComponent2d
 if ! make
 then 
-    print "An error occured during compilation.\n"
+    print "An error occurred during compilation.\n"
     cd ../../../../
     exit 1
 else
@@ -14,10 +14,8 @@ else
 fi
 cd ./gifs
 
-#rho1s=(1.0 1.2 1.4 1.6 1.8)
-#rho0s=(1.0 0.8 0.6 0.4 0.2)
-rho1s=(1.0 0.8 1.0 0.8 1.0 0.8)
-rho0s=(0.0 0.0 0.2 0.2 0.4 0.4)
+rho1s=(1.0 0.8 1.0 0.8)
+rho0s=(0.0 0.0 0.2 0.2)
 
 for i in 0 1 2 3 4 5
 do
@@ -38,7 +36,7 @@ do
     do
         if ! ./rayleighTaylor2D 10000 ${rho1s[i]} ${rho0s[i]} "./gifs$i-${rho1s[i]}-${rho0s[i]}/sim$j"
         then
-            printf "An error occured generating simulation\n"
+            printf "An error occurred generating simulation\n"
             cd ../../../../
             exit 1
         fi
