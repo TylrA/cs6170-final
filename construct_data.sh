@@ -20,7 +20,7 @@ cd ../
 # Run ripser on image boundaries
 cd ./Proj2Utilities/Part1/
 python3 RunRipser
-cd ../
+cd ../../
 
 # Compute bottleneck and wasserstein distances for critical diagrams and store
 cd ./Proj2Utilities/Part1/
