@@ -9,8 +9,8 @@ def run_tests(bandwidths_list, kernel, training_labels_, training_diagrams_, tes
         print("Using %.2f Bandwidth" % bandwidth)
         psk = vector_methods.PersistenceImage(bandwidth=bandwidth, resolution=[100, 100])
 
-        psk.fit(np.array(training_diagrams_))
-        train = psk.transform(np.array(training_diagrams_))
+        psk.fit(training_diagrams_)
+        train = psk.transform(training_diagrams_)
         if kernel is None:
             svc = SVC(gamma='scale')
         else:
@@ -43,16 +43,16 @@ def subpart2():
 
     # Default Kernel
     print("\nUsing default RBF Kernel\n")
-    run_tests(bandwidths, None, training_labels, training_barcodes, test_labels, test_barcodes)
+    run_tests(bandwidths, None, training_labels, training_diagrams, test_labels, testing_diagrams)
 
     # Linear Kernel
     print("\nUsing Linear Kernel\n")
-    run_tests(bandwidths, 'linear', training_labels, training_barcodes, test_labels, test_barcodes)
+    run_tests(bandwidths, 'linear', training_labels, training_diagrams, test_labels, testing_diagrams)
 
     # Polynomial Kernel
     print("\nUsing Cubic Polynomial Kernel\n")
-    run_tests(bandwidths, 'poly', training_labels, training_barcodes, test_labels, test_barcodes)
+    run_tests(bandwidths, 'poly', training_labels, training_diagrams, test_labels, testing_diagrams)
 
     # Sigmoid Kernel
     print("\nUsing Sigmoid Kernel\n")
-    run_tests(bandwidths, 'sigmoid', training_labels, training_barcodes, test_labels, test_barcodes)
+    run_tests(bandwidths, 'sigmoid', training_labels, training_diagrams, test_labels, testing_diagrams)

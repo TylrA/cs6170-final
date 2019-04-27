@@ -29,4 +29,7 @@ directory and run
 bash ./run.sh
 ```
 This will start a script to reproduce the results of the report. Simply follow
-the prompts.
+the prompts. This script essentially runs project 2 for the class which serves
+as a useful comparison between persistent homology of the boundary images and
+critical diagrams. All the parts and subparts referenced in the program exactly
+correspond to the parts and subparts of Project 2.

@@ -5,7 +5,7 @@ import random
 
 
 def subpart1():
-    num_classes = int(input("How many image classes would you like to use? 4 or 8\n"))
+    num_classes = int(input("How many image classes would you like to use? 0 - 4\n"))
     num_samples = int(input("How many samples per class would you like? 0 - 10\n"))
     training_labels, training_barcodes, test_labels, test_barcodes = get_diagrams(num_classes, num_samples)
 
@@ -51,18 +51,6 @@ def get_diagrams(num_classes, num_training_examples_per_class):
     barcodes = []
     dim_0_barcodes = []
     dim_1_barcodes = []
-    # min_dim_0 = float('inf')
-    # min_dim_1 = float('inf')
-    # for bar_dir in dim_0_barcode_dirs:
-    #     with open(parent + "/../Data/ImageBarcodes/dim0/" + bar_dir, 'r') as f:
-    #         lines = f.readlines()
-    #         if len(lines) < min_dim_0:
-    #             min_dim_0 = len(lines)
-    # for bar_dir in dim_1_barcode_dirs:
-    #     with open(parent + "/../Data/ImageBarcodes/dim1/" + bar_dir, 'r') as f:
-    #         lines = f.readlines()
-    #         if len(lines) < min_dim_1:
-    #             min_dim_1 = len(lines)
 
     for bar_dir in dim_0_barcode_dirs:
         im_bars = []
