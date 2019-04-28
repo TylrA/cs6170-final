@@ -90,59 +90,146 @@
 	Note that if many critical points are within the threshold or if they form a chain, they will all be considered the same critical point. This is where the euclidean distance hyper-parameter is important. If a critical point has not died by the end of the simulation we set its death time to the total number of steps in the simulation. Importantly, every critical point has a death time that takes place \emph{after} its birth time. The set of distinct birth/death pairs for each critical point (up to equivalence) can then be formed into a critical diagram. Our hope was that this construction can somewhat accurately capture the evolution of the mixing fluid which is a very important feature of mixing specie, a feature that we do not personally know how to capture with persistent homology. We then use the critical diagrams to develop the same type of classifiers used for persistent homology. The results are discussed in the section below.
 	
 	\section*{\normalfont Results and Insights}
-	\section*{\normalfont Evaluation}
-	\section*{\normalfont Deliverables} 
-	\section*{\normalfont Conclusions and Discussions}
+	\subsection*{\normalfont MDS} 
+	Shown in Figure 1 below are the dimension 0 persistence diagram MDS using Bottleneck and Wasserstein distances respectively. By the lack of clustering we see that dimension 0 persistent homology does not cluster classes nearby under the Bottleneck metric. In Figure 2 below are the dimension 1 persistence diagram MDS using Bottleneck and Wasserstein distances respectively. We see that some clustering is happening which suggests that dimension 1 persistent homology can be successful as a predictor of mixing class.
+	\begin{figure*}[ht!]
+		\centering
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{dim0mdsripserbott.png}
+
+		\end{subfigure}
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{dim0mdsripserwasser.png}
+		\end{subfigure}
+		\caption{Dimension 0 Persistence Diagram MDS Clustering}
+	\end{figure*}
+	\begin{figure*}[ht!]
+		\centering
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{dim1mdsripserbott.png}
+		\end{subfigure}
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{dim1mdsripserwasser.png}
+		\end{subfigure}
+		\caption{Dimension 1 Persistence Diagram MDS Clustering}
+	\end{figure*}
+
+	In comparison to these, consider Figure 3 below. It shows the MDS using both Bottleneck and Wasserstein distances for the critical diagrams, using a threshold $\epsilon^2 = 100$.
+	\begin{figure*}[ht!]
+		\centering
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{mdscritbott.png}
+		\end{subfigure}
+		\begin{subfigure}
+			\centering
+			\includegraphics[scale = .5]{mdscritwasser.png}
+		\end{subfigure}
+		\caption{Critical Diagram MDS Clustering, $\epsilon^2 = 100$}
+	\end{figure*}
+	From Figure 3 we see much better clustering going on, especially with the Wasserstein metric. This suggests that critical diagrams may have more predictive power in classification than persistent homology for this specific dataset.
 	
-%		\begin{figure*}[ht!]
-%		\centering
-%		\begin{subfigure}
-%			\centering
-%			\includegraphics[scale = .25]{fig1.png}
-%			\caption{$t = 2100$}
-%		\end{subfigure}
-%		\begin{subfigure}
-%			\centering
-%			\includegraphics[scale = .25]{fig2.png}
-%			\caption{$t = 2600$}
-%		\end{subfigure}
-%		\begin{subfigure}
-%			\centering
-%			\includegraphics[scale = .25]{fig3.png}
-%			\caption{$t = 2900$}
-%		\end{subfigure}
-%		\begin{subfigure}
-%			\centering
-%			\includegraphics[scale = .25]{fig4.png}
-%			\caption{$t = 3300$}
-%		\end{subfigure}
-%	\end{figure*}
-%	
+	\subsection*{\normalfont Machine Learning}
+	Using the Persistence Scale Space Kernel (PSSK) with the Support Vector Machine (SVM) and a threshold $\epsilon^2 = 100$ on the critical diagrams, we have Tables 1 and 2.
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{ |l|c|c|c|c|c|c| } 
+			\hline
+			Number of Classes & \multicolumn{3}{|c|}{2} & \multicolumn{3}{|c|}{4} \\
+			\hline
+			Number Training Examples:& 4 & 6 & 8 & 4 & 6 & 8 \\ 
+			\hline
+			Training Error  & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+			\hline
+			Testing Error  & 0.50 & 0.25 & 0.75 & 0.5833 & 0.4375 & 0.625\\ 
+			\hline
+		\end{tabular}
+		\caption{Prediction Errors Using Persistence Diagrams, PSSK}
+	\end{table}
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{ |l|c|c|c|c|c|c| } 
+			\hline
+			Number of Classes & \multicolumn{3}{|c|}{2} & \multicolumn{3}{|c|}{4} \\
+			\hline
+			Number Training Examples:& 4 & 6 & 8 & 4 & 6 & 8 \\ 
+			\hline
+			Training Error  & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+			\hline
+			Testing Error  & 0.00 & 0.00 & 0.00 & 0.0833 & 0.00 & 0.00 \\ 
+			\hline
+		\end{tabular}
+		\caption{Prediction Errors Using Critical Diagrams, PSSK}
+	\end{table}
+	From this it is clear that using critical diagrams was a much better predictor of mixing specie than persistence diagrams for the PSSK. The persistence diagrams yielded a testing error of, at best, $43.75\%$ whereas the critical diagrams yielded a testing error of, at worst, $8.\bar{3}\%$. 
 	
-%	\section*{\normalfont Upcoming Milestones} The next milestones are:
-%	\begin{enumerate}
-%%		\item Smooth out the isosurfaces so that we can better track bubble evolution.
-%		\item Implement a height function to track critical points and the evolution of bubbles.
-%		\item Construct a persistence diagram describing the birth and death of bubbles.
-%		\item Possibly classify simulations by density or other parameters by their persistence diagrams. I.e., is this bubble evolution symptomatic of the mixing of air and water?
-%	\end{enumerate} 
-%
-%	\section*{\normalfont Preliminary Results}
-%	While we have not applied a proper topological filtration, we have extracted some data that will be necessary in the final stages. The most challenging aspect so far has been finding a valid, practical algorithm for running the simulation of an RTI. As shown above, we have managed to get one working that provides a solution to the problem in the two dimensional case. With the images that are output, we can approximate the isosurface using edge-detecting algorithms, which we have also done.
-%	
-%	\section*{\normalfont Modifications} RTI is a difficult to simulate on a large scale as it involves numerically solving the system of PDE's
-%	
-%	\begin{gather*}
-%		\frac{\partial \rho Y_i}{\partial t} + \nabla \cdot (\rho Y_i \vec{u} + \vec{J}_i) = 0; i = 1, 2 \\
-%		\frac{\partial \rho \vec{u}}{\partial t} + \nabla \cdot (\rho \vec{u} \cdot \vec{u} + p \vec{\vec{\delta}} - \vec{\vec{\tau}}) = \rho \vec{g} \\
-%		\frac{\partial E}{\partial t} + \nabla \cdot ((E + p)\vec{u} -\vec{\vec{\tau}}\cdot \vec{u} + \vec{q_c} + \vec{q_d} ) = \rho \vec{g} \cdot \vec{u} \\
-%	\end{gather*} 
-%	at each time step. While we have some background in PDE's, we do not feel our background is sufficient to construct a solver from scratch quickly. After researching a few algorithms and trying to implement broken software, we found the Palabos library, located at \url{http://www.palabos.org/}, which contains the software used to generate the images above. Due to the computation intensive process of generating a 3D dataset on which to use Morse-Smale complexes, we may choose to use the 2-dimensional version. If we use 2D, we will use a height function to compute and store relevant critical point information. Additionally, since we are in essence extracting a boundary from the 2D sample image, we can use methods learned in this class to attempt to classify different mixing species using TDA and machine-learning. Alternatively, if we can generate sufficient 3D data, we can use the recommended software to continue with the project as originally planned.
-%	
-%	 	\section*{\normalfont Summary}
-%	We have arranged a process to acquire the data necessary for our research over two dimensional RTIs, including the simulation and the extraction of isosurfaces from said simulation. We hope to acquire three dimensional RTI data as well. Regarding the data, we still have not utilized topological data analysis to perform the essence of our research. This should include several topological filtrations.
-%	
-%	With the filtrations we plan to classify simulations by the structure of their RTIs. Factors that will be considered include the birth and death times of bubbles, as well as their size.
+	Continuing, we now look at the results for Persistence Images (PI) again using the SVM. The tables below show prediction errors for various kernels, number of training classes, and number of examples. For brevity, we set the bandwidth hyper-parameter to 0.9 for both persistence and critical diagrams. Again we also use $\epsilon^2 = 100$. When running the program, classification results for different bandwidths are shown.
+	
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{ |l|c|c|c|c|c|c| } 
+			\hline
+			Number of Classes & \multicolumn{3}{|c|}{2} & \multicolumn{3}{|c|}{4} \\
+			\hline
+			Number Training Examples:& 4 & 6 & 8 & 4 & 6 & 8 \\ 
+			\hline
+			RBF Kernel Training Error  & 0.125 & 0.00 & 0.125 & 0.125 & 0.20833 & 0.28125 \\ 
+			\hline
+			RBF Kernel Testing Error  & 0.25 & 0.125 & 0.25 & 0.50 & 0.4375 & 0.50\\ 
+			\hline
+			Linear Kernel Training Error  & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+			\hline
+			Linear Kernel Testing Error  & 0.166 & 0.25 & 0.25 & 0.5833 & 0.50 & 0.625\\ 
+			\hline
+			Cubic Kernel Training Error  & 0.25 & 0.25 & 0.25 & 0.4375 & 0.54167 & 0.40625 \\ 
+			\hline
+			Cubic Kernel Testing Error  & 0.333 & 0.125 & 0.50 & 0.70833 & 0.5625 & 0.75\\ 
+			\hline
+			Sigmoid Kernel Training Error  & 0.125 & 0.00 & 0.125 & 0.1875 & 0.20833 & 0.3125 \\ 
+			\hline
+			Sigmoid Kernel Testing Error  & 0.25 & 0.125 & 0.25 & 0.50 & 0.4375 & 0.50\\ 
+			\hline
+		\end{tabular}
+		\caption{Prediction Errors Using Persistence Diagrams, PI}
+	\end{table}
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{ |l|c|c|c|c|c|c| } 
+			\hline
+			Number of Classes & \multicolumn{3}{|c|}{2} & \multicolumn{3}{|c|}{4} \\
+			\hline
+			Number Training Examples:& 4 & 6 & 8 & 4 & 6 & 8 \\ 
+			\hline
+			RBF Kernel Training Error  & 0.375 & 0.4166 & 0.375 & 0.00 & 0.166 & 0.1875 \\ 
+			\hline
+			RBF Kernel Testing Error  & 0.4167 & 0.375 & 0.50 & 0.125 & 0.25 & 0.25\\ 
+			\hline
+			Linear Kernel Training Error  & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+			\hline
+			Linear Kernel Testing Error  & 0.0833 & 0.00 & 0.00 & 0.125 & 0.00 & 0.00\\ 
+			\hline
+			Cubic Kernel Training Error  & 0.25 & 0.167 & 0.25 & 0.00 & 0.166 & 0.15625 \\ 
+			\hline
+			Cubic Kernel Testing Error  & 0.333 & 0.25 & 0.25 & 0.125 & 0.25 & 0.125\\ 
+			\hline
+			Sigmoid Kernel Training Error  & 0.375 & 0.4166 & 0.00 & 0.1875 & 0.166 & 0.1875 \\ 
+			\hline
+			Sigmoid Kernel Testing Error  & 0.4167 & 0.375 & 0.50 & 0.125 & 0.25 & 0.25\\ 
+			\hline
+		\end{tabular}
+		\caption{Prediction Errors Using Critical Diagrams, PI}
+	\end{table}
+	From these tables we notice a few curious details. The first is that for a smaller number of classes used for classification, the persistence diagrams outperform the critical diagrams but the converse was true for a larger number of classes used for classification. However, this was not the case for the linear kernel. With this kernel, prediction using critical diagrams had a worst predictive error of $12.5\%$ whereas the best predictive error using persistence diagrams was $16.5\%$. 
+
+\section*{\normalfont Evaluation}
+Overall the critical diagrams served as good features for classifying mixing specie.
+
+\section*{\normalfont Deliverables} 
+\section*{\normalfont Conclusions and Discussions}
 \bibliography{mybib}{}
 \bibliographystyle{plain}
 

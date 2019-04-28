@@ -4,10 +4,10 @@ import os
 import random
 
 
-def subpart1():
+def subpart1(crit_or_ripser):
     num_classes = int(input("How many image classes would you like to use? 0 - 4\n"))
     num_samples = int(input("How many samples per class would you like? 0 - 10\n"))
-    training_labels, training_barcodes, test_labels, test_barcodes = get_diagrams(num_classes, num_samples)
+    training_labels, training_barcodes, test_labels, test_barcodes = get_diagrams(num_classes, num_samples, crit_or_ripser)
 
     psk = kernel_methods.PersistenceScaleSpaceKernel()
     psk.fit(training_barcodes)
@@ -37,20 +37,19 @@ def subpart1():
     print("Test error was %.16f" % test_error)
 
 
-def get_diagrams(num_classes, num_training_examples_per_class):
+def get_diagrams(num_classes, num_training_examples_per_class, crit_or_ripser):
     cwd = os.getcwd()
     parent = os.path.join(cwd, os.path.join(os.path.dirname(__file__)))
+
+    barcodes = []
+    labels = []
+
     dim_0_barcode_dirs = os.listdir(parent + "/../Data/ImageBarcodes/dim0/")
     dim_0_barcode_dirs.sort()
-    dim_1_barcode_dirs = os.listdir(parent + "/../Data/ImageBarcodes/dim1/")
-    dim_1_barcode_dirs.sort()
-    labels = []
     for im_dir in dim_0_barcode_dirs:
         labels.append(im_dir.split("-")[0])
 
-    barcodes = []
     dim_0_barcodes = []
-    dim_1_barcodes = []
 
     for bar_dir in dim_0_barcode_dirs:
         im_bars = []
@@ -63,20 +62,29 @@ def get_diagrams(num_classes, num_training_examples_per_class):
         # im_bars = random.sample(im_bars, min_dim_0)
         dim_0_barcodes.append(im_bars)
 
-    for bar_dir in dim_1_barcode_dirs:
-        with open(parent + "/../Data/ImageBarcodes/dim1/" + bar_dir, 'r') as f:
-            im_bars = []
-            lines = f.readlines()
-            for line in lines:
-                terms = (line.strip()).split(" ")
-                point = [float(terms[0]), float(terms[1])]
-                im_bars.append(point)
+    if crit_or_ripser != "1":
+        dim_1_barcode_dirs = os.listdir(parent + "/../Data/ImageBarcodes/dim1/")
+        dim_1_barcode_dirs.sort()
+        dim_1_barcodes = []
 
-        # im_bars = random.sample(im_bars, min_dim_1)
-        dim_1_barcodes.append(im_bars)
+        for bar_dir in dim_1_barcode_dirs:
+            with open(parent + "/../Data/ImageBarcodes/dim1/" + bar_dir, 'r') as f:
+                im_bars = []
+                lines = f.readlines()
+                for line in lines:
+                    terms = (line.strip()).split(" ")
+                    point = [float(terms[0]), float(terms[1])]
+                    im_bars.append(point)
 
-    for i in range(0, len(dim_0_barcodes)):
-        barcodes.append(dim_0_barcodes[i] + dim_1_barcodes[i])
+            # im_bars = random.sample(im_bars, min_dim_1)
+            dim_1_barcodes.append(im_bars)
+
+        for i in range(0, len(dim_0_barcodes)):
+            barcodes.append(dim_0_barcodes[i] + dim_1_barcodes[i])
+
+    else:
+        for i in range(0, len(dim_0_barcodes)):
+            barcodes.append(dim_0_barcodes[i])
 
     training_barcodes = []
     training_labels = []

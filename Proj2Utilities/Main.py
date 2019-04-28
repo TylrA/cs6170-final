@@ -1,5 +1,6 @@
 from Part1 import Part1
 from Part2 import Part2
+import sys
 
 
 if __name__ == "__main__":
@@ -12,10 +13,10 @@ if __name__ == "__main__":
             part_choice = int(input("Please choose a part of Project 2 to view.\n1. Part 1\n2. Part 2\n3. Exit\n"))
 
         if part_choice == 1:
-            Part1.part1()
+            Part1.part1(sys.argv[1])
 
         elif part_choice == 2:
-            Part2.part2()
+            Part2.part2(sys.argv[1])
         else:
             exit(0)
 

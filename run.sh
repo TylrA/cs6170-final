@@ -23,5 +23,13 @@ else
 fi
 
 cd ./Proj2Utilities/
-bash ./run.sh
+if python3 Main.py "$choice"
+then
+    cd ../
+    exit 0
+else
+    printf "An error occurred somewhere in the program\n"
+    cd ../
+    exit 1
+fi
 cd ../

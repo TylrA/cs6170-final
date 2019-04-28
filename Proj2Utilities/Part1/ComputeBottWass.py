@@ -68,6 +68,8 @@ def helper(bottleneck, bubble_backup_or_ripser_backup):
     dimensional_barcode_dirs = get_dimensional_barcode_dirs(
         parent + "/../../DataBackup/" + bubble_backup_or_ripser_backup)
     for k, barcode_dirs in enumerate(dimensional_barcode_dirs):
+        if k == 1 and bubble_backup_or_ripser_backup == "bubble_backup":
+            continue
         persistance_distances = np.zeros((num_diagrams, num_diagrams))
         current_count = 0
         for i in range(0, num_diagrams):

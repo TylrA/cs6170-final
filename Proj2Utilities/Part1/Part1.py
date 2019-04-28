@@ -2,7 +2,7 @@ from Part1 import Subpart1
 from Part1 import Subpart2
 
 
-def part1():
+def part1(crit_or_ripser):
     repeat_choice = True
     while repeat_choice:
 
@@ -12,9 +12,9 @@ def part1():
             problem_part_choice = int(input("Please choose a problem subpart\n1. Subpart 1\n2. Subpart 2\n3 Exit\n"))
 
         if problem_part_choice == 1:
-            Subpart1.subpart1()
+            Subpart1.subpart1(crit_or_ripser)
         elif problem_part_choice == 2:
-            Subpart2.subpart2()
+            Subpart2.subpart2(crit_or_ripser)
 
         repeat = input("Would you like to view another subpart from part 1? y/n\n")
         if repeat != "y":

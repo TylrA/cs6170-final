@@ -26,10 +26,10 @@ def run_tests(bandwidths_list, kernel, training_labels_, training_diagrams_, tes
         print("Test error was %.16f\n" % (1.0 - test_error))
 
 
-def subpart2():
+def subpart2(crit_or_ripser):
     num_classes = int(input("How many image classes would you like to use? 0 - 4\n"))
     num_samples = int(input("How many samples per class would you like? 0 - 10\n"))
-    training_labels, training_barcodes, test_labels, test_barcodes = Subpart1.get_diagrams(num_classes, num_samples)
+    training_labels, training_barcodes, test_labels, test_barcodes = Subpart1.get_diagrams(num_classes, num_samples, crit_or_ripser)
 
     training_diagrams = []
     for i in range(0, len(training_barcodes)):
@@ -40,6 +40,7 @@ def subpart2():
         testing_diagrams.append(np.array(test_barcodes[i]))
 
     bandwidths = [0.5, 0.7, 0.9, 1.1, 1.3, 1.5]
+    # bandwidths = [0.9]
 
     # Default Kernel
     print("\nUsing default RBF Kernel\n")
