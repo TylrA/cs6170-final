@@ -64,7 +64,7 @@ def build_persistence_diagram_from_data(path_to_files, curr_count, max_count, gi
     point_files = os.listdir(path_to_files)
     point_files.sort()
     graphs = []
-    sys.stdout.write('Progress: [%s]' % (' ' * 100))
+    sys.stdout.write('\rProgress: [%s]' % (' ' * 100))
     sys.stdout.flush()
     for k, point_file in enumerate(point_files):
         if point_file.split('.')[1] == 'txt':
@@ -81,7 +81,7 @@ def build_persistence_diagram_from_data(path_to_files, curr_count, max_count, gi
 
             # Update progress
             sys.stdout.write('\rProgress: [%s' % ('#' * count))
-            sys.stdout.write('%s] %i / %i ' % (' ' * (100 - count), curr_count, max_count))
+            sys.stdout.write('%s] %i / %i ' % (' ' * (100 - count), curr_count + 1, max_count))
             sys.stdout.flush()
 
     sys.stdout.write('\rProgress: [%s]' % ('#' * 100))
@@ -101,6 +101,7 @@ def generate_diagrams():
     main_points_dir = parent + "/smoothed_boundary_points"
     dirs_by_label = os.listdir(main_points_dir)
     dirs_by_label.sort()
+    dirs_by_label.remove("MoveFiles.py")
     for i_ in range(0, len(dirs_by_label)):
         print("\nBuilding diagrams for class %i / %i" % (i_ + 1, len(dirs_by_label)))
         label_abs_dir = main_points_dir + "/" + dirs_by_label[i_]

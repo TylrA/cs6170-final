@@ -8,9 +8,9 @@
 ###################################
 
 # Generate critical diagrams
-#cd ./final/
-#python3 GenerateCriticalDiagrams.py
-#cd ../
+cd ./final/
+python3 GenerateCriticalDiagrams.py
+cd ../
 
 # Install local ripser and hera interfaces
 cd ./Proj2Utilities/
