@@ -13,6 +13,7 @@
 \usepackage{bm}
 \usepackage{cite}
 \usepackage{subfigure}
+\usepackage{cite}
 
 \graphicspath{{./}}
 \title{Final Report}
@@ -45,7 +46,7 @@
 	
 	\section*{\normalfont Introduction}
 	% Motivation and a brief project description.
-	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to use machine-learning to construct a classifier that accurately predicts the mixing-specie using topological data analysis (TDA) and other methods learned throughout the course. To do so, we will compare two different classifiers. The first is a classifier constructed using persistent homology on the mixing boundary. The second classifier is constructed on the mixing boundary using what we later define as \emph{critical diagrams}. This path is inspired directly by the material we have learned throughout the course.
+	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we hope to use machine-learning to construct a classifier that accurately predicts the mixing-specie using topological data analysis (TDA) and other methods learned throughout the course. To do so, we will compare two different data structures on which we will train various classifiers. The first uses persistence diagrams constructed using persistent homology on the mixing boundary. The second is constructed on the mixing boundary using what we later define as \emph{critical diagrams}. This path is inspired directly by the material we have learned throughout the course. We will compare the various classifiers and their results using resources and software developed for the second course project.
 	
 	\section*{\normalfont Technical Contributions} 
 	\section*{\normalfont Data}
@@ -58,7 +59,7 @@
 	We were unable to use more mixing classes because of the amount of time it takes to run the software and extract boundaries as well as the fact that we were unable to develop robust boundary extraction software for some of the more wild images generated for other mixing specie. Additionally, the densities above are purely numeric. No fluid has a density of 0.0. However the software mentioned above would break whenever we used density values outside the interval $[0.0, 1.0]$ so we were restricted to this range. Thus the fluid densities do not represent actually existing fluids. 
 	
 	\section*{\normalfont Background and Related Work}
-	 
+	The inspiration for the project largely came from \cite{paper} 
 	
 	\section*{\normalfont Methods}
 	\section*{\normalfont Results and Insights}
@@ -115,6 +116,7 @@
 %	We have arranged a process to acquire the data necessary for our research over two dimensional RTIs, including the simulation and the extraction of isosurfaces from said simulation. We hope to acquire three dimensional RTI data as well. Regarding the data, we still have not utilized topological data analysis to perform the essence of our research. This should include several topological filtrations.
 %	
 %	With the filtrations we plan to classify simulations by the structure of their RTIs. Factors that will be considered include the birth and death times of bubbles, as well as their size.
-
+\bibliography{mybib}{}
+\bibliographystyle{plain}
 
 \end{document}

@@ -8,18 +8,23 @@
 ###################################
 
 # Generate critical diagrams
-cd ./final/
-python3 GenerateCriticalDiagrams.py
-cd ../
+#cd ./final/
+#python3 GenerateCriticalDiagrams.py
+#cd ../
 
 # Install local ripser and hera interfaces
 cd ./Proj2Utilities/
 bash ./install.sh
 cd ../
 
+# Move last-stage simulation image to correct folder for ripser
+cd ./final/smoothed_boundary_points/
+python3 MoveFiles.py
+cd ../../
+
 # Run ripser on image boundaries
 cd ./Proj2Utilities/Part1/
-python3 RunRipser
+python3 RunRipser.py
 cd ../../
 
 # Compute bottleneck and wasserstein distances for critical diagrams and store
