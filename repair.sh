@@ -16,7 +16,7 @@
 # NOTE: expect to try several configurations before one accurately tracks the isosurface.
 
 # SRCPATH should point to the mother directory of the raw images produced by palabos. It should contain directories {gifs$idx | idx = 0, 1, 2, 3}, each of which should contain directories {sim$idx | idx = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-SRCPATH=../../final_data/original
+SRCPATH=sim_data
 
 # DESTPATH should point to the destination directory.
 DESTPATH=point_clouds/new

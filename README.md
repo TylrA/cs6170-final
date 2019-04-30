@@ -30,6 +30,6 @@ as a useful comparison between persistent homology of the boundary images and
 critical diagrams. All the parts and subparts referenced in the program exactly
 correspond to the parts and subparts of Project 2.
 
-## Source code
+## Source Code
 
-The java source code for the boundary extraction is found in "simulation/point_extraction/f".
+The java source code for the boundary extraction is found in `simulation/point_extraction/f`.

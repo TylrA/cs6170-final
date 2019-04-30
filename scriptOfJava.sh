@@ -3,7 +3,7 @@
 # Check the SRCPATH and DESTPATH to make sure they are pointing to the correct directories, then run script and watch for stalls. Every time it stalls for more than a few seconds, you will probably have to kill it with the kill command. Use ps a to find the right java program pid. These unfinished boundaries will have to be computed later using repair.sh and repair2.sh
 
 # SRCPATH should be set to the mother directory of the raw images from palabos. This directory should contain directories {gifs$idx | idx = 0, 1, 2, 3}, each of which should contain directories {sim$idx | idx = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.
-SRCPATH=../../final_data/original/
+SRCPATH=sim_data
 
 # DESTPATH should be set to the mother destination directory.
 DESTPATH=point_clouds/new
