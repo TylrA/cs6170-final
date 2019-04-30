@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#cd ./simulation/
-#bash ./simulate.sh     # Create simulation. This takes a VERY LONG time. Approx 12 hours.
-#cd ../
+cd ./simulation/
+bash ./simulate.sh     # Create simulation. This takes a VERY LONG time. Approx 12 hours.
+cd ../
 
 #bash ./scriptOfJava.sh # Extracts the boundary surface. Please note that this often stalls. If you want to compute the boundaries yourself, you will often have to kill running java programs, and compute them individually with ./repair.sh and ./repair2.sh. See all three scripts for more details.
 
