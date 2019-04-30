@@ -268,7 +268,7 @@ void BoxDensityFunctional2D<T,Descriptor>::process (
     for (plint iX=domain.x0; iX<=domain.x1; ++iX) {
         for (plint iY=domain.y0; iY<=domain.y1; ++iY) {
             scalarField.get(iX+offset.x,iY+offset.y)
-                = (double)((int)(lattice.get(iX,iY).computeDensity() * 5.0)) / 5.0;
+                = lattice.get(iX,iY).computeDensity();
         }
     }
 }
