@@ -27,32 +27,33 @@
 	\maketitle 
 	\hrule 
 	\vskip 0.5cm
-	\section{Paper Rubric}
-	\begin{enumerate}
-		\item Team Members:  the names and UID of your team members.
-		\item Introduction:  Motivation  and  a  brief  project  description.   What  is  the  main  objective  of  your project?  What is an overview of your strategy to achieve your objective?
-		\item Technical Contributions:  What are the technical contributions of your proposed work?
-		\item Data:  What are the type(s) of data your project will be dealing with?  How do you plan to gethold of such data sets?  What kind of insights are you planning to obtain from your data?
-		\item Background and Related Work:  technical background, together with related work.  What are thestate-of-the-art techniques in dealing with the data of your interest?  What are the differences andsimilarities between your work and the state-of-the-art?
-		\item Methods:   What  methods  have  you  used/developed?   What  are  your  strategies  in  tackling  the proposed problem?
-		\item Results and Insights:  What are the results of your proposed project?  What are the key insights?
-		\item Evaluation:  What metrics do you use to evaluate how successful your project is?  What are thetake home messages based on your evaluation?
-		\item Deliverables:  What are your deliverables?  (e.g.  source code,  video demo,  etc.)  What software(and possibly hardware) do you use?  Or in the case you are working on software extensions, whatis the baseline software you work with?
-		\item Conclusions and Dicussions:  answer specific questions below using 1-2 sentences:
-		\begin{itemize}
-			\item What is an overview of your project?
-			\item What are your project objectives?
-			\item What questions does your project address?
-			\item What are the key insights based on your results?
-			\item What are future directions?
-		\end{itemize}
-	\end{enumerate}	
+%	\section{Paper Rubric}
+%	\begin{enumerate}
+%		\item Team Members:  the names and UID of your team members.
+%		\item Introduction:  Motivation  and  a  brief  project  description.   What  is  the  main  objective  of  your project?  What is an overview of your strategy to achieve your objective?
+%		\item Technical Contributions:  What are the technical contributions of your proposed work?
+%		\item Data:  What are the type(s) of data your project will be dealing with?  How do you plan to gethold of such data sets?  What kind of insights are you planning to obtain from your data?
+%		\item Background and Related Work:  technical background, together with related work.  What are thestate-of-the-art techniques in dealing with the data of your interest?  What are the differences andsimilarities between your work and the state-of-the-art?
+%		\item Methods:   What  methods  have  you  used/developed?   What  are  your  strategies  in  tackling  the proposed problem?
+%		\item Results and Insights:  What are the results of your proposed project?  What are the key insights?
+%		\item Evaluation:  What metrics do you use to evaluate how successful your project is?  What are thetake home messages based on your evaluation?
+%		\item Deliverables:  What are your deliverables?  (e.g.  source code,  video demo,  etc.)  What software(and possibly hardware) do you use?  Or in the case you are working on software extensions, whatis the baseline software you work with?
+%		\item Conclusions and Dicussions:  answer specific questions below using 1-2 sentences:
+%		\begin{itemize}
+%			\item What is an overview of your project?
+%			\item What are your project objectives?
+%			\item What questions does your project address?
+%			\item What are the key insights based on your results?
+%			\item What are future directions?
+%		\end{itemize}
+%	\end{enumerate}	
 	
 	\section*{\normalfont Introduction}
 	% Motivation and a brief project description.
 	Rayleigh-Taylor instability (RTI) forms at the surface of contact between two fluids, one of which is denser and accelerates toward the other. Formations in RTI are not symmetric between the denser and lighter fluids, and the features of both sides serve to characterize the RTI. However, these features quickly rise in complexity, and it is unrealistic to simulate them beyond a given time threshold. In our project we used machine-learning to construct a classifier that accurately predicts the mixing-specie using topological data analysis (TDA) and other methods learned throughout the course. To do so, we compared two different data structures on which we will train various classifiers. The first uses persistence diagrams constructed using persistent homology on the mixing boundary. The second is constructed on the mixing boundary using what we later define as \emph{critical diagrams}. This path is inspired directly by the material we have learned throughout the course. We will compare the various classifiers and their results using a collection of resources and software, some of which was developed for the second course project.
 	
 	\section*{\normalfont Technical Contributions}
+	
 	
 	\section*{\normalfont Data}
 	The data we used was simulated using the Palabos library, located at \url{http://www.palabos.org/}. This library specializes in modeling fluid dynamics. A \emph{mixing class} is an ordered pair $(\rho_1, \rho_0)$ of densities of fluids whereby $\rho_1$ is the density of the heavier top fluid and $\rho_0$ is the density of the lighter bottom fluid. Using the above mentioned software, we chose four mixing classes, 
@@ -64,7 +65,7 @@
 	We were unable to use more mixing classes because of the amount of time it takes to run the software and extract boundaries as well as the fact that we were unable to develop robust boundary extraction software for some of the more wild images generated for other mixing specie. Additionally, the densities above are purely numeric, and do not translate directly to real units. No fluid has a density of 0.0. However the software mentioned above was configured to accept ``density'' values in the interval $[0.0, 1.0]$, so we were restricted to this range. Thus the fluid densities do not represent actual existing fluids. % would break whenever we used density values outside the interval $[0.0, 1.0]$
 	
 	\section*{\normalfont Background and Related Work}
-	The inspiration for the project largely came from \cite{paper}. In the paper, the authors simulate RTI and keep track of the bubble evolution using Morse-Smale Complexes. Since we are using two-dimensional images, we believe Morse-Smale complexes are either poorly defined or irrelevant, so we did not directly use their approach. However, we modified it to something that was more applicable to two dimensional RTIs. In tracking bubble evolution to display a merge-split tree, the authors kept track of the critical point locations (maximum critical points, not minimum critical points) by using the Euclidean distance between critical points in successive time steps of the simulation. Given some threshold (Euclidean radius), it seemed that they treated two critical points in two successive simulations as equivalent if they were within this threshold. This was the inspiration for our method of attack as described in the section below. 
+	The inspiration for the project largely came from \cite{paper}. In the paper, the authors simulate RTI and keep track of the bubble evolution using Morse-Smale Complexes. Since we are using two-dimensional images, we believe Morse-Smale complexes are either poorly defined or irrelevant, so we did not directly use their approach. However, we modified it to something that was more applicable to two dimensional RTIs. In tracking bubble evolution to display a merge-split tree, the authors kept track of the critical point locations (maximum critical points, not minimum critical points) by using the Euclidean distance between critical points in successive time steps of the simulation. Given some threshold (Euclidean radius), it seemed that they treated two critical points in two successive iterations as equivalent if they were within this threshold. This was the inspiration for our method of attack as described in the section below. 
 	
 	We are not aware of any work that tries to classify mixing specie using a machine learning approach. Because of this, we are unable to compare our approach with a state-of-the-art baseline. In lieu of this, because our approach is almost algorithmically-identical to the use of peristent homology in classifying images with which this course gave us much experience, we chose that as our baseline of comparison.
 	
